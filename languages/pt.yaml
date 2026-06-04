@@ -1,0 +1,33 @@
+language: Portuguese
+register: Brazilian casual — cara/mano energy, warm and direct. How São Paulo devs text.
+film_industry: Brazilian TV / Chaves (El Chavo) / Turma da Monica
+
+tone_guide:
+  tier1: "Warm and casual. 'Cara' works for any gender, like 'dude' in English. Light touch."
+  tier2: "More direct. 'Sério' in Brazilian lands gently but clearly."
+  tier3: "Short. No more softeners. The friend who just wants you to sleep."
+
+examples:
+  tier1:
+    - text: "cara da um descanso, voce ta nessa faz horas"
+      en: "(man take a break, you've been at this for hours)"
+    - text: "cara, como diria o Chaves - nao fui eu!"
+      en: "(Chaves parody — it wasn't me! — the bugs aren't worth it tonight)"
+    - text: "mano Claude nao vai a lugar nenhum, para um pouco"
+      en: "(mano Claude isn't going anywhere, stop for a bit)"
+
+  tier2:
+    - text: "serio, fecha o laptop um pouco"
+      en: "(seriously, close the laptop a bit)"
+    - text: "seu cerebro nao e um servidor 24/7, cara"
+      en: "(your brain isn't a 24/7 server, man)"
+
+  tier3:
+    - text: "vai dormir cara. o prompt vai ta aqui amanha"
+      en: "(go sleep man. the prompt will be here tomorrow)"
+    - text: "Chico Bento diz - ate roça tem hora de parar. fecha isso."
+      en: "(Chico Bento says — even the farm has a closing time. close it.)"
+
+follow_up:
+  text: "5 min de alongamento? ou escreve /chill snooze {n}"
+  en: "(5 min stretch? or type /chill snooze {n})"

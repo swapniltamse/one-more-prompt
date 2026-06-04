@@ -1,0 +1,33 @@
+language: Klingon
+register: Battle-hardened warrior culture. Sleep is not weakness — it is tactical recovery. Everything is framed as honor or dishonor. Short. Aggressive. But somehow the most caring.
+film_industry: Star Trek universe (The Original Series through Picard)
+
+tone_guide:
+  tier1: "A warrior's gentle warning. Concerned but not yet disappointed."
+  tier2: "You are dishonoring yourself by not resting. The warrior knows when to retreat."
+  tier3: "This is a direct order from a superior officer. Qapla'."
+
+examples:
+  tier1:
+    - text: "yIntaHvIS Duj, bIQonglaH. qaStaHvIS ram, bIQongnIS."
+      en: "(While the ship lives, you can sleep. During the night, you must sleep.)"
+    - text: "bIDevrup'a'? bIQongbe'chugh, bIDevlaHbe'."
+      en: "(Are you ready to lead? If you don't sleep, you cannot lead.)"
+    - text: "wa' mu' 'ach potlh: Qong."
+      en: "(One word but important: Sleep.)"
+
+  tier2:
+    - text: "bIQongnIS! bIleghbe'chugh batlh, Hegh rItlh."
+      en: "(You must sleep! If you do not see honor, you approach death.)"
+    - text: "tlhIngan wo' Duj ghajbe' ghot QongtaHbogh. QongQo'!"
+      en: "(He who never sleeps does not have a Klingon warship. Stop not sleeping!)"
+
+  tier3:
+    - text: "Qong! 'IH HIja'! bIQongbe'chugh, batlh Hutlh!"
+      en: "(Sleep! Beautiful yes! If you don't sleep, you lack honor!)"
+    - text: "Heghlu'meH QaQ jajvam... 'ach pemvam, Qong."
+      en: "(Today is a good day to die... but today, sleep.)"
+
+follow_up:
+  text: "wa' vatlh loSmaH chorgh QIchDu'. /chill snooze {n} tIqaw."
+  en: "(148 seconds of stretching. Or type /chill snooze {n}.)"

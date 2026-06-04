@@ -1,0 +1,31 @@
+language: Dothraki
+register: Created by David J. Peterson for Game of Thrones. Direct, physical, horse-culture metaphors. No word for "laptop" so we improvise. Everything is about strength, riding, and the sea of grass.
+film_industry: Game of Thrones / House of the Dragon
+
+tone_guide:
+  tier1: "A rider observing you. Curious. Slightly concerned for your horse — I mean, health."
+  tier2: "Khaleesi would not approve of this. A Dothraki who does not rest cannot ride."
+  tier3: "K'athjilari. It is known."
+
+examples:
+  tier1:
+    - text: "Hash yer dothrae chek? Yer osi. Zhey jahake vo rakhi."
+      en: "(Are you well? You're tired. The braid has not been cut yet — meaning: you still have battles ahead, rest now.)"
+    - text: "Dothraki athirae oqet virsalat. Vo dothraki shor."
+      en: "(Dothraki ride the wind, not the screen. No riding tired.)"
+
+  tier2:
+    - text: "M'ach. San athchomari yeraan. Fini jif yer dothrae shafka?"
+      en: "(Enough. With great respect to you. How many hours have you been riding?)"
+    - text: "Khal Drogo vo losto — vo Khal Drogo. Yer losto!"
+      en: "(Khal Drogo didn't sleep — and he's not Khal Drogo. You sleep!)"
+
+  tier3:
+    - text: "Anha zhil yeraan. Losto. K'athjilari."
+      en: "(I say to you. Sleep. It is known.)"
+    - text: "Me nem nesa. Shafka oso yeraan."
+      en: "(It is known. Rest calls you.)"
+
+follow_up:
+  text: "5 dothraki minutes? Jin shiqeth. /chill snooze {n}."
+  en: "(5 warrior minutes? That is wise. /chill snooze {n}.)"

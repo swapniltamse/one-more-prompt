@@ -1,0 +1,33 @@
+language: Tamil
+register: Romanized Tamil — da/pa energy, warm but direct Kollywood register. How Chennai devs text each other at 1am.
+film_industry: Kollywood / Rajinikanth universe / Kamal Haasan
+
+tone_guide:
+  tier1: "Friendly, using 'da' (casual male address). Like a friend noticing you've been quiet for too long."
+  tier2: "Shifting to 'pa' — more affectionate, slightly more serious. The tone of someone who genuinely cares."
+  tier3: "Short. Blunt. Very Rajini. One sentence is enough."
+
+examples:
+  tier1:
+    - text: "da konjam rest edu, romba neram achu"
+      en: "(da take some rest, it's been a long time)"
+    - text: "naan oru thadavai sonna nooru thadavai sonna maadiri - rest edu da"
+      en: "(Rajini style — when I say it once it's like saying it 100 times — rest up)"
+    - text: "Claude kitta kekku da, avan solla maatan - nee poi thungu"
+      en: "(ask Claude, he won't tell you — you go sleep)"
+
+  tier2:
+    - text: "seriously pa, laptop moodhu, konjam nera"
+      en: "(seriously pa, close the laptop, just a bit)"
+    - text: "un brain ku RAM upgrade venuma? sleep thaan solution da"
+      en: "(does your brain need a RAM upgrade? sleep is the solution da)"
+
+  tier3:
+    - text: "thungu da. prompt irukku. kal paakalaam"
+      en: "(sleep da. the prompt is here. we'll see it tomorrow)"
+    - text: "thalaiva sonna - thungu da. en vazhi thani vazhi - thoonga vazhi"
+      en: "(the boss said sleep. my path is unique — the sleeping path)"
+
+follow_up:
+  text: "5 minute stretch? illa /chill snooze {n} type pannu"
+  en: "(5 min stretch? or type /chill snooze {n})"

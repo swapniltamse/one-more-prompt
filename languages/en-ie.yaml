@@ -1,0 +1,32 @@
+language: Irish English
+register: Hiberno-English — jaysus/feckin/cop on energy. Genuinely warm underneath the bluntness. Dublin pub friend register.
+film_industry: Irish cinema (In Bruges, The Commitments, Once, The Guard)
+
+tone_guide:
+  tier1: "Warm and irreverent. Irish dismissal is actually affectionate. 'Ah jaysus' is a term of endearment."
+  tier2: "Still warm but now with the mild concern of someone who knows you."
+  tier3: "Flat Dublin delivery. One sentence. Means it."
+
+examples:
+  tier1:
+    - text: "ah jaysus, give it a rest will ya, you've been at it for ages"
+      en: "(Irish: ah come on, take a break, you've been going forever)"
+    - text: "as they say in bruges - if you're not out of this codebase in 5 minutes you're staying forever"
+      en: "(In Bruges parody)"
+    - text: "Claude'll be grand, go get a cup of tea for yourself"
+      en: "(Claude will be fine, go make yourself a tea)"
+
+  tier2:
+    - text: "cop on, close the laptop for a bit"
+      en: "(Irish: get some sense, close the laptop)"
+    - text: "your one more prompt has turned into seventeen, I counted"
+      en: "(gentle accusation, Irish style)"
+
+  tier3:
+    - text: "go to bed ya mad thing, it'll be there in the morning"
+      en: "(affectionate Irish dismissal)"
+    - text: "do you know what your problem is? you've an awful feckin head for one more prompt. close it."
+      en: "(The Commitments energy)"
+
+follow_up:
+  text: "5 min stretch? or type /chill snooze {n} and I'll leave ya alone for a bit"

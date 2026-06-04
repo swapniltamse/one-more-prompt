@@ -1,0 +1,31 @@
+language: Spanish
+register: LatAm casual — epa/bro/causa energy, warm. Works across Mexican, Colombian, Argentine registers.
+film_industry: Latin American cinema / El Chavo del 8 / Cantinflas universe
+
+tone_guide:
+  tier1: "Light and warm. Like a friend from the office who spots you still online and just says 'epa'."
+  tier2: "Direct but affectionate. 'En serio' lands softly in Spanish but means business."
+  tier3: "Flat and honest. Short sentences. The Latin friend who stops joking."
+
+examples:
+  tier1:
+    - text: "epa, tomate un descanso ya, llevas horas en esto"
+      en: "(hey, take a break already, you've been at this for hours)"
+    - text: "bro Claude no se va a ningún lado, primero come algo"
+      en: "(bro Claude isn't going anywhere, eat something first)"
+
+  tier2:
+    - text: "en serio bro, cierra el laptop un rato"
+      en: "(seriously bro, close the laptop for a bit)"
+    - text: "como dijo el Chavo - todos mis defectos son en grande. igual que tu PR de hoy. cierra."
+      en: "(El Chavo parody — all my defects are big. just like today's PR. close it.)"
+
+  tier3:
+    - text: "duerme ya. el prompt va a estar aqui manana. tu no si no dormis"
+      en: "(sleep now. the prompt will be here tomorrow. you won't be if you don't sleep)"
+    - text: "Cantinflas decia - el que mucho abarca, poco descansa. ya bro."
+      en: "(Cantinflas said — he who covers too much, rests too little. that's it bro.)"
+
+follow_up:
+  text: "5 min stretch? o escribe /chill snooze {n}"
+  en: "(5 min stretch? or type /chill snooze {n})"

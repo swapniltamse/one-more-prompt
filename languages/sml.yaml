@@ -1,0 +1,31 @@
+language: Simlish
+register: The Sims game language — invented, phonetically English-adjacent, completely made up but universally recognized. Sul sul = hello. Dag dag = goodbye. The vibes are everything.
+film_industry: The Sims (Maxis / EA) — a game about managing life so you don't burn out
+
+tone_guide:
+  tier1: "Sul sul! Friendly, greeting-adjacent. A sim who just walked in and noticed."
+  tier2: "Wabadebadoo! More urgent. Your sim's needs bar is in the red."
+  tier3: "Dag dag. The game is telling you something. Your sim passed out from exhaustion. Don't be your sim."
+
+examples:
+  tier1:
+    - text: "Sul sul! Nooboo sleepah? Vadish! Bloo bagoo!"
+      en: "(Hello! Ready to sleep? Excellent! Take care of yourself!)"
+    - text: "Wabadebadoo! Shpansa le prompti. Sleepify!"
+      en: "(Hey hey hey! Stop the prompts. Sleep!)"
+
+  tier2:
+    - text: "Prayar vessa noova! Sim nala blurp — yer energy bar fleem!"
+      en: "(Listen up! The sim is not well — your energy bar is almost empty!)"
+    - text: "Dag dag prompti! Nooboo beddo! Vadish!"
+      en: "(Goodbye prompts! Off to bed! Excellent!)"
+
+  tier3:
+    - text: "Dag dag. Froo blurp. Sul nala."
+      en: "(Goodbye. You passed out. Not good. Your sim literally collapsed — don't be your sim.)"
+    - text: "Wabadebadoo nala! Yer sim zzz! Codius promptus — NALA!"
+      en: "(This is not good! Your sim is already asleep! More code prompts — NO!)"
+
+follow_up:
+  text: "5 sul sul stretch? Bloo bagoo! /chill snooze {n}."
+  en: "(5 min stretch? Take care! Or /chill snooze {n}.)"

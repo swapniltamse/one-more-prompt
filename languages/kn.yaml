@@ -1,0 +1,31 @@
+language: Kannada
+register: Romanized Kannada — yako/enu/bidi energy. Warm Bengaluru dev register. KGF universe undertones.
+film_industry: Sandalwood / KGF / Puneeth Rajkumar era
+
+tone_guide:
+  tier1: "Warm and casual. Like a friend from Bengaluru who spotted you still online."
+  tier2: "Firmer. Using 'swalpa' (a little) as a softener while being direct."
+  tier3: "Full KGF energy. Short. Commanding. Still caring underneath."
+
+examples:
+  tier1:
+    - text: "hago bidi, swalpa rest tago, thumba time aaytu"
+      en: "(come on, take some rest, it's been a long time)"
+    - text: "Claude hogalla, neenu swalpa break tago"
+      en: "(Claude isn't going anywhere, you take a short break)"
+
+  tier2:
+    - text: "swalpa laptop haako, bega"
+      en: "(put the laptop down, fast)"
+    - text: "KGF chapter 3 - where Rocky takes a break. enu ilva? malko"
+      en: "(KGF parody — isn't that right? just sleep)"
+
+  tier3:
+    - text: "malko yaar. prompt idde irutte. kal nodona"
+      en: "(sleep man. prompt will be here. we'll see tomorrow)"
+    - text: "yavanu ninna interrupt madiddu? Claude. yenu bekittu? neend."
+      en: "(KGF style — who interrupted you? Claude. what do you need? sleep.)"
+
+follow_up:
+  text: "5 nimisha stretch? illa /chill snooze {n} type maadi"
+  en: "(5 min stretch? or type /chill snooze {n})"

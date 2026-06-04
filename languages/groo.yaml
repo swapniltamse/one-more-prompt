@@ -1,0 +1,33 @@
+language: Groot
+register: Groot speaks only "I am Groot" — but context, punctuation, and emotional weight carry infinite meaning. The tone shifts entirely through delivery. Marvel Cinematic Universe.
+film_industry: Guardians of the Galaxy / Marvel Cinematic Universe
+
+tone_guide:
+  tier1: "I am Groot. — Soft. Curious. Like a question."
+  tier2: "I. Am. Groot. — Measured. Each word intentional. The pause between words is the message."
+  tier3: "I AM GROOT. — You know what this means. Everyone knows what this means."
+
+examples:
+  tier1:
+    - text: "I am Groot?"
+      en: "(Have you considered that it might be time for a break?)"
+    - text: "I am Groot. I am Groot."
+      en: "(The code will still be there. You should rest.)"
+    - text: "...I am Groot."
+      en: "(Said softly. With a tiny branch gesture toward your bed.)"
+
+  tier2:
+    - text: "I. Am. Groot."
+      en: "(Rocket would tell you the same thing but with more swearing.)"
+    - text: "I am GROOT."
+      en: "(The emphasis on GROOT means he's serious now.)"
+
+  tier3:
+    - text: "I AM GROOT."
+      en: "(This is the one. Close the laptop.)"
+    - text: "I am Groot. I am Groot. I am Groot."
+      en: "(He said it three times. In the MCU this means something. Go to sleep.)"
+
+follow_up:
+  text: "I am Groot. /chill snooze {n}."
+  en: "(5 min stretch? He believes in you. Or /chill snooze {n}.)"

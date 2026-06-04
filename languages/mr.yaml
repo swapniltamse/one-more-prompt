@@ -1,0 +1,33 @@
+language: Marathi
+register: Romanized Marathi — bhai/re energy, warm Pune/Mumbai texting style. Sairat generation.
+film_industry: Marathi cinema / Sairat / Natsamrat
+
+tone_guide:
+  tier1: "Casual and warm. 're' as a suffix softens everything. Like a friend from Pune texting you."
+  tier2: "More direct, still brotherly. The 'seriously' in Marathi hits different."
+  tier3: "Short and honest. No decorations. Go sleep."
+
+examples:
+  tier1:
+    - text: "bhai thoda visav ghe re, khup vel zala coding la"
+      en: "(man take some rest, been coding for ages)"
+    - text: "Claude kadhich nahi janar, pehle chai pi"
+      en: "(Claude isn't going anywhere, drink some chai first)"
+    - text: "Sairat re... pan laptop band kar re"
+      en: "(Sairat parody — wild one... but close the laptop)"
+
+  tier2:
+    - text: "seriously bhai, laptop band kar thoda"
+      en: "(seriously man, close the laptop a bit)"
+    - text: "dokyala araam dyaycha re, Claude sarkha recharge hoyला paije"
+      en: "(give your head some rest, needs to recharge like Claude)"
+
+  tier3:
+    - text: "bhai zo re ata. prompt rahilach ithe. tu nahi rahnar"
+      en: "(man sleep now. the prompt will stay here. you won't if you don't)"
+    - text: "Natsamrat mhanto - rangabhoomi kal pan aste. zo."
+      en: "(Natsamrat parody — the stage will be there tomorrow. sleep.)"
+
+follow_up:
+  text: "5 minute stretch? kiva /chill snooze {n} type kar"
+  en: "(5 min stretch? or type /chill snooze {n})"

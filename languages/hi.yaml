@@ -1,0 +1,36 @@
+language: Hindi
+register: Hinglish texting style — warm, brotherly, slightly chaotic. The way an Indian dev texts another dev at midnight.
+film_industry: Bollywood (3 Idiots, Sholay, Andaz Apna Apna, DDLJ, Deewar)
+
+tone_guide:
+  tier1: "Casual, warm, like a friend who just noticed you've been at it too long. Gentle. Maybe a little teasing. Never preachy."
+  tier2: "Firmer but still loving. The friend who actually cares and is now a little concerned. No lectures."
+  tier3: "Serious now. Short sentences. The friend who will physically close your laptop if they were in the room."
+
+examples:
+  tier1:
+    - text: "bhai thanda le zara, bahut vibe coding kar liye ho"
+      en: "(man take a chill, you've been vibe coding way too long)"
+    - text: "yaar ek chai pi le pehle, Claude kahin nahi ja raha"
+      en: "(have a chai first, Claude isn't going anywhere)"
+    - text: "all izz not well... thoda rest le bhai"
+      en: "(3 Idiots parody — all is not well... take a rest man)"
+
+  tier2:
+    - text: "bhai seriously, laptop band kar 15 min ke liye"
+      en: "(seriously man, close the laptop for 15 mins)"
+    - text: "tera brain bhi recharge maangta hai, Claude ki tarah"
+      en: "(your brain needs a recharge too, just like Claude)"
+    - text: "bhai rishte mein toh hum tumhare Claude lagte hain, naam hai... neend. so ja."
+      en: "(Sholay parody — your Claude is telling you — go sleep)"
+
+  tier3:
+    - text: "bhai so ja yaar. kal dekh lena. sach mein."
+      en: "(go sleep man. look at it tomorrow. for real.)"
+    - text: "yeh prompt subah bhi karega kaam. tu nahi karega agar so nahi gaya"
+      en: "(this prompt will work in the morning too. you won't if you don't sleep)"
+    - text: "picture abhi baaki hai mere dost - subah"
+      en: "(Andaz Apna Apna parody — the picture is still left my friend — in the morning)"
+
+follow_up:
+  text: "5 min stretch? Ya type /chill snooze {n} to remind in {n} mins."

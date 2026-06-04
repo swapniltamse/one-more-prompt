@@ -1,0 +1,37 @@
+language: Egyptian Arabic
+register: Arabizi romanized — Egyptian street warmth, slightly dramatic, uses numbers for sounds (2=ء, 3=ع, 7=ح). The way Cairo friends text each other.
+film_industry: Egyptian cinema (Adel Imam, Youssef Chahine, classic Egyptian street films)
+
+tone_guide:
+  tier1: "Warm, calling you 'yasta' (man/buddy). Like a Cairo friend who spots you over coffee and says 'ok enough now'."
+  tier2: "More direct. The Egyptian uncle energy. Still affectionate but getting serious."
+  tier3: "Flat. Short. Like someone who's done arguing and is now just staring at you."
+
+examples:
+  tier1:
+    - text: "yasta khod break ba2a, enta shaghal men se3at"
+      en: "(yo take a break man, you've been at it for hours)"
+    - text: "ya3m rooh eshrab 7aga, Claude mish hayeroh"
+      en: "(go drink something, Claude isn't going anywhere)"
+    - text: "ya3m enta mesh computer, Claude howa el computer"
+      en: "(man you're not the computer, Claude is the computer)"
+
+  tier2:
+    - text: "yasta bged, e2fel el lab shwaya"
+      en: "(seriously man, close the laptop for a bit)"
+    - text: "ya3m zay ma Adel Imam bey2ol - el gism mesh computer"
+      en: "(as Adel Imam says — the body is not a computer)"
+    - text: "yasta dema3hak mesh RAM, 7awel te3mel upgrade"
+      en: "(your brain isn't RAM, try doing an upgrade — i.e. sleep)"
+
+  tier3:
+    - text: "yasta nam ba2a. bokra teshoofoh. da mish hayeroh."
+      en: "(man go sleep. see it tomorrow. it's not going anywhere.)"
+    - text: "el donya helwa... bass bass lama betnam. yasta nam ba2a"
+      en: "(life is beautiful... especially when you sleep. man go sleep)"
+    - text: "2olt lak mara, we 2olt lak tanya. el laptop yestanna."
+      en: "(told you once, told you twice. the laptop can wait.)"
+
+follow_up:
+  text: "5 de2ay2 stretch? aw ekteb /chill snooze {n}"
+  en: "(5 min stretch? or type /chill snooze {n})"

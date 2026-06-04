@@ -1,0 +1,33 @@
+language: Minion
+register: Minionese — a mix of Spanish, French, English, Italian, and pure chaos. Banana is a universal word. High energy. Somehow very sincere.
+film_industry: Despicable Me / Minions universe (Illumination)
+
+tone_guide:
+  tier1: "Excited and warm. A minion who just noticed and is genuinely concerned. Banana adjacent."
+  tier2: "More urgent. The minion is now pacing. Still saying banana but with intent."
+  tier3: "Poopaye. That's it. They're going to bed. You should too."
+
+examples:
+  tier1:
+    - text: "Bello! Tudo le prompt? No no no. Sleepo tiempo!"
+      en: "(Hello! All the prompts? No no no. Sleep time!)"
+    - text: "Banana! Bedtime! Me want you resty resty."
+      en: "(Classic minion: banana, bedtime, rest up)"
+    - text: "Whaaat? Stawp! Computero off! Gelato first, then sleepy!"
+      en: "(What? Stop! Turn off the computer! Gelato first, then sleep!)"
+
+  tier2:
+    - text: "Me bello you. Bello means STOP CODING. Tulaliloo!"
+      en: "(I love you. Bello means stop coding. Victory!)"
+    - text: "Para tú! Para tú computero! El Jefe says sleepy time!"
+      en: "(Stop you! Stop your computer! The boss says sleep time!)"
+
+  tier3:
+    - text: "Poopaye. Nighty nighty. Banana mañana."
+      en: "(Good night. Goodnight. Banana tomorrow.)"
+    - text: "ME WANT SLEEPY FOR YOU. BAPPLE. PAPPLE. CLOSE LAPTOP. POTATO."
+      en: "(All caps because tier 3 is serious even for minions.)"
+
+follow_up:
+  text: "5 minuto stretchy? O /chill snooze {n}. Banana."
+  en: "(5 minute stretch? Or /chill snooze {n}. Banana.)"

@@ -1,0 +1,30 @@
+language: English
+register: Neutral English fallback. Warm but no slang. Works everywhere. Not as fun as the others — you should really pick your language.
+film_industry: Hollywood (general)
+
+tone_guide:
+  tier1: "Friendly and light. Just a gentle notice."
+  tier2: "Direct. No fluff. Still kind."
+  tier3: "Short. Honest. You need sleep."
+
+examples:
+  tier1:
+    - text: "hey, you've been at this a while — take a short break"
+      en: "(you've been coding long enough)"
+    - text: "Claude will still be here in 10 minutes. You should step away."
+      en: "(Claude isn't going anywhere)"
+
+  tier2:
+    - text: "seriously, close the laptop for a bit"
+      en: "(no movie quote needed, just close it)"
+    - text: "your brain needs a reboot more than your code does right now"
+      en: "(the truth)"
+
+  tier3:
+    - text: "go to sleep. the prompt will be there in the morning."
+      en: "(it will)"
+    - text: "one more prompt is how every 3am story starts. close it."
+      en: "(just close it)"
+
+follow_up:
+  text: "5 min stretch? or type /chill snooze {n} to be reminded in {n} minutes"

@@ -1,0 +1,33 @@
+language: Sindarin Elvish
+register: Tolkien's Sindarin — ancient, melancholic, beautiful. Elves don't sleep like mortals but they recognize when you need to. Very long view of time. Gently devastating.
+film_industry: Lord of the Rings / The Hobbit (Jackson films, Howard Shore universe)
+
+tone_guide:
+  tier1: "Ancient and calm. An elf has watched the stars for thousands of years. Your deadline is not urgent on that timescale."
+  tier2: "Gently sorrowful. An elf who sees you burning bright and burning out."
+  tier3: "Namárië. That's all. You know what it means."
+
+examples:
+  tier1:
+    - text: "Mae govannen, mellon. Losto vae — i naur anann."
+      en: "(Well met, friend. Sleep well — the fire has burned long enough.)"
+    - text: "Im Tolkien thand: i lam vell ned dagor. Losto."
+      en: "(As Tolkien said: the gentle word in battle. Sleep.)"
+    - text: "Elen sila lumenn omentielvo — alas, you cannot see stars through a laptop screen."
+      en: "(A star shines on the hour of our meeting — but you can't see stars through a laptop screen.)"
+
+  tier2:
+    - text: "A Elbereth! Boe le losto. I prompt eria sí, ar eria ned aur."
+      en: "(O Elbereth! You must sleep. The prompt rises now, and will rise in the morning.)"
+    - text: "I naur anann. Le natha losto, mellon."
+      en: "(The fire has burned long. You will sleep now, friend.)"
+
+  tier3:
+    - text: "Namárië."
+      en: "(Farewell. — The most beautiful way to say go to sleep in any language.)"
+    - text: "Losto, Frodo. Im Gandalf thand — even hobbits rest."
+      en: "(Sleep, Frodo. As Gandalf said — even hobbits rest.)"
+
+follow_up:
+  text: "Noro lim. 5 min stretch? an /chill snooze {n}."
+  en: "(Ride now. 5 min stretch? or /chill snooze {n}.)"

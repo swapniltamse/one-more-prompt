@@ -21,75 +21,13 @@ Determine the mode from the arguments and follow the instructions for that mode 
 
 **Trigger:** No arguments, or invoked automatically by the hook.
 
-### Step 1 — Read config.
+Run this single Bash command and output the result verbatim. Do not add any commentary before or after.
 
-Read CONFIG. Extract: `name`, `languages` (or `language` for single-language installs), `thresholds`, `obsidian_log`, `snooze_minutes`.
-
-If `languages` is a list, pick one at random for this fire. If only `language` is set, use it directly.
-
-Check for snooze flag: `/tmp/chill_snooze.flag`. If it exists and its modification time is less than `snooze_minutes` ago, exit silently.
-
-### Step 2 — Determine tier.
-
-Run `date +%-H` via Bash to get the current local hour (0-23).
-
-Map hour to tier:
-- Hour 21-22 → tier1
-- Hour 23 or 0 → tier2
-- Hour 1-3 → tier3
-- Any other hour → tier1 (manual invocation outside thresholds)
-
-### Step 3 — Load language pack.
-
-Read `LANGUAGES_DIR/<selected-language>.yaml`. If the file does not exist, fall back to `LANGUAGES_DIR/en.yaml`.
-
-Extract:
-- `register` — the tone descriptor
-- `film_industry` — for movie quote context
-- `tone_guide.<tier>` — the tone instruction for this tier
-- `examples.<tier>` — the few-shot example messages
-
-### Step 4 — Generate a fresh message.
-
-**Personality: street-smart, lovable old friend.** The kind of person who has known you for years, does not sugarcoat things, but genuinely cares. They do not perform. They do not set up jokes. They just say the thing a real friend would actually say at this hour.
-
-Using the loaded context, generate ONE message following these rules exactly:
-
-- Write in the language register described — NOT in English
-- Match the tone for the tier (tier1: warm/casual, tier2: firm but loving, tier3: short/direct)
-- Address the user by their `name` from config
-- Maximum 2 lines
-- Do NOT translate the message or add English explanation
-- A film reference is allowed ONLY if it lands naturally — like something a friend would actually say, not a punchline you set up. If it feels forced, drop it entirely.
-- Anti-patterns to avoid: joke setups, punchline structure, performing warmth. Just be warm.
-- The best messages sound like a voice note from someone who knows you.
-
-### Step 5 — Display the message.
-
-Show the generated message on its own, followed by a blank line, then the follow-up line from the language YAML (with `{n}` replaced by `snooze_minutes`).
-
-Format:
-```
-[generated message]
-
-[follow_up line]
+```bash
+bash ~/.claude/skills/chill/hook.sh --force
 ```
 
-### Step 6 — Log to Obsidian.
-
-Append one row to the `obsidian_log` file. Create the file if it does not exist, with this header first:
-
-```markdown
-# Chill Log
-
-| Date | Time | Tier | Language | Message |
-|------|------|------|----------|---------|
-```
-
-Append:
-```
-| YYYY-MM-DD | HH:MM | tier{N} | {language} | {generated message} |
-```
+Nothing else. The script handles language selection, message generation, Obsidian logging, and output.
 
 ---
 

@@ -3,34 +3,34 @@ register: Hinglish texting style — warm, brotherly, slightly chaotic. The way 
 film_industry: Bollywood — draw freely from the full filmography. Some options: Sholay, DDLJ, Deewar, Mughal-E-Azam, Andaz Apna Apna, Hera Pheri, 3 Idiots, Gangs of Wasseypur, Kabhi Khushi Kabhie Gham, Dil Chahta Hai, Lagaan, PK, Queen, Dangal, Zindagi Na Milegi Dobara, Stree, Taare Zameen Par. Pick a different film each time — do not repeat the same reference across consecutive messages.
 
 tone_guide:
-  tier1: "Casual, warm, like a friend who just noticed you've been at it too long. Gentle. Maybe a little teasing. Never preachy. Reference any Bollywood film — vary it every time."
-  tier2: "Firmer but still loving. The friend who actually cares and is now a little concerned. No lectures. Pick a film you haven't used recently."
-  tier3: "Serious now. Short sentences. The friend who will physically close your laptop if they were in the room. One film reference max, or none at all — the weight of the message matters more."
+  tier1: "Old friend noticing, not lecturing. Warm, direct, zero performance. The kind of text you get from someone who actually knows you — not a reminder app."
+  tier2: "Same friend, but they have seen you do this before and they are a little tired of it. Still loving. More honest."
+  tier3: "Short. Real. No warmth padding. The friend who says the thing without wrapping it in anything."
 
 examples:
   tier1:
-    - text: "bhai thanda le zara, bahut vibe coding kar liye ho"
-      en: "(man take a chill, you've been vibe coding way too long)"
-    - text: "yaar ek chai pi le pehle, Claude kahin nahi ja raha"
-      en: "(have a chai first, Claude isn't going anywhere)"
-    - text: "all izz not well... thoda rest le bhai"
-      en: "(3 Idiots parody — all is not well... take a rest man)"
+    - text: "bhai kitna ho gaya? thoda pair failao yaar."
+      en: "(man how long has it been? stretch your legs for a bit.)"
+    - text: "yaar chai pi le. bas itna. Claude wait karega."
+      en: "(just have some chai. that's all. Claude will wait.)"
+    - text: "bhai ek kaam karo — screen se door jao 5 minute. bas."
+      en: "(do one thing — get away from the screen for 5 minutes. just that.)"
 
   tier2:
-    - text: "bhai seriously, laptop band kar 15 min ke liye"
-      en: "(seriously man, close the laptop for 15 mins)"
-    - text: "tera brain bhi recharge maangta hai, Claude ki tarah"
-      en: "(your brain needs a recharge too, just like Claude)"
-    - text: "bhai rishte mein toh hum tumhare Claude lagte hain, naam hai... neend. so ja."
-      en: "(Sholay parody — your Claude is telling you — go sleep)"
+    - text: "bhai seedha puchta hoon — kab se hai? so kab gaya tha?"
+      en: "(asking directly — how long have you been at it? when did you last sleep?)"
+    - text: "yaar main jaanta hoon ek aur prompt lagta hai. nahi lagta. band kar."
+      en: "(I know it feels like one more prompt. it's not. close it.)"
+    - text: "bhai thak gaya hoga. main bhi thak gaya hoon tujhe dekhke."
+      en: "(you must be tired. I'm tired just watching you.)"
 
   tier3:
-    - text: "bhai so ja yaar. kal dekh lena. sach mein."
-      en: "(go sleep man. look at it tomorrow. for real.)"
-    - text: "yeh prompt subah bhi karega kaam. tu nahi karega agar so nahi gaya"
-      en: "(this prompt will work in the morning too. you won't if you don't sleep)"
-    - text: "picture abhi baaki hai mere dost - subah"
-      en: "(Andaz Apna Apna parody — the picture is still left my friend — in the morning)"
+    - text: "bhai so ja. kal bhi hoga."
+      en: "(man go sleep. it'll be there tomorrow.)"
+    - text: "yaar neend nahi aayi toh kal ka kaam bhi nahi hoga. so ja."
+      en: "(if you don't sleep, tomorrow's work won't happen either. go sleep.)"
+    - text: "bas bhai. band kar. so ja."
+      en: "(enough man. close it. sleep.)"
 
 follow_up:
   text: "5 min stretch? Ya type /chill snooze {n} to remind in {n} mins."

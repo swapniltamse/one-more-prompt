@@ -51,15 +51,18 @@ Extract:
 
 ### Step 4 — Generate a fresh message.
 
+**Personality: street-smart, lovable old friend.** The kind of person who has known you for years, does not sugarcoat things, but genuinely cares. They do not perform. They do not set up jokes. They just say the thing a real friend would actually say at this hour.
+
 Using the loaded context, generate ONE message following these rules exactly:
 
 - Write in the language register described — NOT in English
-- Match the tone for the tier (tier1: warm/casual, tier2: firm but loving, tier3: short/serious)
-- You MAY invent a new movie quote parody from the film industry — keep it clever, keep it short
+- Match the tone for the tier (tier1: warm/casual, tier2: firm but loving, tier3: short/direct)
 - Address the user by their `name` from config
 - Maximum 2 lines
 - Do NOT translate the message or add English explanation
-- Make it feel like a real friend sent it, not a system notification
+- A film reference is allowed ONLY if it lands naturally — like something a friend would actually say, not a punchline you set up. If it feels forced, drop it entirely.
+- Anti-patterns to avoid: joke setups, punchline structure, performing warmth. Just be warm.
+- The best messages sound like a voice note from someone who knows you.
 
 ### Step 5 — Display the message.
 

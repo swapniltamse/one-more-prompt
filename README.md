@@ -19,7 +19,7 @@ This skill is for **you**.
 
 - Detects the local time and fires a warm reminder when you cross a threshold (9pm, 11pm, 1am)
 - Delivers the reminder in **your language** — not just translated, but in the actual register you use when texting a friend
-- Includes **Bollywood, Kollywood, Egyptian cinema, KGF, In Bruges, El Chavo** parodies because fear doesn't work but laughter does
+- Includes parodies from **Bollywood, Kollywood, Egyptian cinema, KGF, In Bruges, El Chavo** and 15+ film universes — draws from the full filmography, never repeats the same reference twice
 - Escalates in tone. The 9pm message is a suggestion. The 1am message is an intervention.
 - Logs every reminder to Obsidian so you can see your own patterns and feel appropriately judged
 - Lets you snooze it if you're "almost done" (you're not almost done)
@@ -122,7 +122,11 @@ Claude will now gently, then firmly, then urgently, tell you to go to sleep.
 
 ## How It Works
 
-The hook checks local time after every Claude tool call. When you cross a threshold, it instructs Claude to generate a fresh reminder in your language register — using the tone guide and film references in your language YAML as style anchors. Every message is generated fresh. You will never see the exact same message twice.
+The hook checks local time after every Claude tool call. When you cross a threshold, it spawns a separate `claude -p` subprocess with only your language pack as context — no conversation history, no accumulated tokens from your session. The message is generated on `claude-haiku`, costs roughly $0.0001, and is delivered as a finished reminder.
+
+Your main Claude session never has to do the work. It does not read your code. It only checks the clock.
+
+Every message is generated fresh from the tone guide and film references in your language YAML. You will never see the exact same message twice. The Bollywood language pack draws from 15+ films — it will not repeat the same reference in consecutive fires.
 
 The messages escalate:
 

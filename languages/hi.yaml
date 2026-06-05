@@ -1,11 +1,11 @@
 language: Hindi
 register: Hinglish texting style — warm, brotherly, slightly chaotic. The way an Indian dev texts another dev at midnight.
-film_industry: Bollywood (3 Idiots, Sholay, Andaz Apna Apna, DDLJ, Deewar)
+film_industry: Bollywood — draw freely from the full filmography. Some options: Sholay, DDLJ, Deewar, Mughal-E-Azam, Andaz Apna Apna, Hera Pheri, 3 Idiots, Gangs of Wasseypur, Kabhi Khushi Kabhie Gham, Dil Chahta Hai, Lagaan, PK, Queen, Dangal, Zindagi Na Milegi Dobara, Stree, Taare Zameen Par. Pick a different film each time — do not repeat the same reference across consecutive messages.
 
 tone_guide:
-  tier1: "Casual, warm, like a friend who just noticed you've been at it too long. Gentle. Maybe a little teasing. Never preachy."
-  tier2: "Firmer but still loving. The friend who actually cares and is now a little concerned. No lectures."
-  tier3: "Serious now. Short sentences. The friend who will physically close your laptop if they were in the room."
+  tier1: "Casual, warm, like a friend who just noticed you've been at it too long. Gentle. Maybe a little teasing. Never preachy. Reference any Bollywood film — vary it every time."
+  tier2: "Firmer but still loving. The friend who actually cares and is now a little concerned. No lectures. Pick a film you haven't used recently."
+  tier3: "Serious now. Short sentences. The friend who will physically close your laptop if they were in the room. One film reference max, or none at all — the weight of the message matters more."
 
 examples:
   tier1:

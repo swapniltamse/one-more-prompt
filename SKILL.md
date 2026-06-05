@@ -23,7 +23,9 @@ Determine the mode from the arguments and follow the instructions for that mode 
 
 ### Step 1 — Read config.
 
-Read CONFIG. Extract: `name`, `language`, `thresholds`, `obsidian_log`, `snooze_minutes`.
+Read CONFIG. Extract: `name`, `languages` (or `language` for single-language installs), `thresholds`, `obsidian_log`, `snooze_minutes`.
+
+If `languages` is a list, pick one at random for this fire. If only `language` is set, use it directly.
 
 Check for snooze flag: `/tmp/chill_snooze.flag`. If it exists and its modification time is less than `snooze_minutes` ago, exit silently.
 
@@ -39,7 +41,7 @@ Map hour to tier:
 
 ### Step 3 — Load language pack.
 
-Read `LANGUAGES_DIR/<language>.yaml`. If the file does not exist, fall back to `LANGUAGES_DIR/en.yaml`.
+Read `LANGUAGES_DIR/<selected-language>.yaml`. If the file does not exist, fall back to `LANGUAGES_DIR/en.yaml`.
 
 Extract:
 - `register` — the tone descriptor

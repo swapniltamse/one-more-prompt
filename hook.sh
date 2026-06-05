@@ -37,7 +37,15 @@ touch "$FIRED_FLAG"
 
 # Read config values
 NAME=$(grep '^name:' "$CONFIG" | awk '{print $2}' | tr -d '"')
-LANG=$(grep '^language:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+
+# Support both `languages: [hi, mr, en]` (multi) and `language: hi` (single)
+LANGS_RAW=$(grep '^languages:' "$CONFIG" | sed 's/languages: *//' | tr -d '[]"' | tr ',' ' ')
+if [ -n "$LANGS_RAW" ]; then
+  LANG_ARRAY=($LANGS_RAW)
+  LANG=${LANG_ARRAY[$RANDOM % ${#LANG_ARRAY[@]}]}
+else
+  LANG=$(grep '^language:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+fi
 OBSIDIAN_LOG=$(grep 'obsidian_log:' "$CONFIG" | sed 's/obsidian_log: *//' | tr -d '"')
 SNOOZE_MINS=$(grep 'snooze_minutes' "$CONFIG" | awk '{print $2}' | tr -d '"')
 SNOOZE_MINS=${SNOOZE_MINS:-30}

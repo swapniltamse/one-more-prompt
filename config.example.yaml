@@ -2,7 +2,8 @@
 # Run /chill setup for an interactive wizard instead
 
 name: YourName
-language: hi                        # hi | ar | ta | kn | mr | es | pt | en-ie | en
+language: hi                        # single language — hi | ar | ta | kn | mr | es | pt | en-ie | en
+# languages: [hi, mr, en]           # OR pick multiple — one is chosen at random each fire
 timezone: America/New_York          # IANA timezone string
 
 thresholds:

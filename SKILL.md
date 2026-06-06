@@ -21,13 +21,27 @@ Determine the mode from the arguments and follow the instructions for that mode 
 
 **Trigger:** No arguments, or invoked automatically by the hook.
 
-Run this single Bash command and output the result verbatim. Do not add any commentary before or after.
+### Step 1 — Check calendar (optional)
 
+Read `~/.claude/skills/chill/config.yaml`. If `calendar: true`:
+- Call the Google Calendar MCP to list events for tomorrow
+- Find the first event (earliest start time)
+- Format as: `--calendar-event "HH:MM EventTitle"`
+- If no events or MCP unavailable, omit the flag entirely
+
+### Step 2 — Delegate to hook
+
+Run and output verbatim. No commentary before or after.
+
+**With calendar:**
+```bash
+bash ~/.claude/skills/chill/hook.sh --force --calendar-event "HH:MM EventTitle"
+```
+
+**Without calendar:**
 ```bash
 bash ~/.claude/skills/chill/hook.sh --force
 ```
-
-Nothing else. The script handles language selection, message generation, Obsidian logging, and output.
 
 ---
 

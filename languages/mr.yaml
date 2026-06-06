@@ -1,33 +1,32 @@
 language: Marathi
-register: Romanized Marathi — bhai/re energy, warm Pune/Mumbai texting style. Sairat generation.
-film_industry: Marathi cinema / Sairat / Natsamrat
+register: Pune/Mumbai tapori Marathi — "bhava", "bidu", "ek number", "bindaas", "solid". Street-smart sassy best friend who grew up in Pune. Warm, direct, a little cheeky. Not performing warmth — just being real.
+film_industry: Marathi tapori universe — Sairat, Natsamrat, Fandry, Poshter Boyz. Draw freely, vary every time, never force it.
 
 tone_guide:
-  tier1: "Old Pune friend texting. Warm, real, not performing. 're' suffix keeps it gentle. No jokes needed — just honesty with care."
-  tier2: "Same friend, slightly more direct. They have seen you do this before. No annoyance, just a little more push."
-  tier3: "Short. The 're' can go. Plain honest words. Nothing extra."
+  tier1: "Sassy Pune best friend noticing you've been at it too long. Tapori Marathi — bhava, bidu, ek number, chal re. Warm, never preachy."
+  tier2: "Same friend, now a little impatient. They have been watching you. Still love you, but done waiting."
+  tier3: "Short. Plain. The tapori energy drops. Just the words that matter."
 
 examples:
   tier1:
-    - text: "bhai kiti vel zala re? uth, thoda fir."
-      en: "(man how long has it been? get up, walk a bit.)"
-    - text: "Swapnil re, chai pi adhee. Claude kadhich nahi janar."
-      en: "(Swapnil, have chai first. Claude isn't going anywhere.)"
-    - text: "yaar khup zala coding. dokyala visav dyaycha re."
-      en: "(that's a lot of coding. give your head some rest.)"
+    - text: "aye Swapnil bhava, chal re — kitna zala screen pe? uth bidu."
+      en: "(hey Swapnil bro, come on — how long on screen? get up buddy.)"
+    - text: "yaar ek number kaam kelas — aata chai pi aani thoda fir."
+      en: "(man you've done great work — now have chai and walk a bit.)"
+    - text: "bidu solid chal, laptop side la thev. pair faila re."
+      en: "(buddy come on, put the laptop aside. stretch.)"
 
   tier2:
-    - text: "bhai seedha sangto — kiti vel hai re yaat? band kar."
-      en: "(man telling you straight — how long have you been at this? close it.)"
-    - text: "re Swapnil, thakla asel tu. main pan thaklo tula pahun."
-      en: "(Swapnil, you must be tired. I'm tired just watching you.)"
+    - text: "Swapnil bhava, apun ne sab baghitla — band kar ata seedha. kal pan aahe."
+      en: "(Swapnil bro, I've seen it all — just close it now. tomorrow exists too.)"
+    - text: "bidu kiti vela sangaycha? dolya sangtat zo. aik tyanna."
+      en: "(buddy how many times to say it? your eyes are saying sleep. listen to them.)"
 
   tier3:
-    - text: "bas re. zo ata."
-      en: "(enough. go sleep now.)"
-    - text: "Swapnil zo. kal pan aahe."
-      en: "(Swapnil sleep. tomorrow exists too.)"
+    - text: "bas bidu. zo ata."
+      en: "(enough buddy. go sleep now.)"
+    - text: "chal. band. zo."
+      en: "(come on. close. sleep.)"
 
 follow_up:
   text: "5 minute stretch? kiva /chill snooze {n} type kar"
-  en: "(5 min stretch? or type /chill snooze {n})"

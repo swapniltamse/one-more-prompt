@@ -3,7 +3,7 @@
 > "Just one more prompt."
 > — Every developer, 2am, right before they broke production.
 
-A Claude Code skill that notices when you've been at it too long and tells you to stop — in your own language, with movie quotes, at escalating levels of urgency.
+A Claude Code skill that notices when you've been at it too long and tells you to stop — as your street-smart, sassy best friend would. In your own language. At escalating levels of urgency. And if you have a 9am standup, it will tell you that too.
 
 ---
 
@@ -19,8 +19,10 @@ This skill is for **you**.
 
 - Detects the local time and fires a warm reminder when you cross a threshold (9pm, 11pm, 1am)
 - Delivers the reminder in **your language** — not just translated, but in the actual register you use when texting a friend
-- Includes parodies from **Bollywood, Kollywood, Egyptian cinema, KGF, In Bruges, El Chavo** and 15+ film universes — draws from the full filmography, never repeats the same reference twice
-- Escalates in tone. The 9pm message is a suggestion. The 1am message is an intervention.
+- Speaks as your **street-smart, sassy best friend** — not a wellness app. Hindi/Marathi fires in tapori register. "Aye bidu chal re, kitna ho gaya screen pe?"
+- Draws from **15+ film universes** — Bollywood tapori (Munna Bhai, Hera Pheri), Kollywood, KGF, In Bruges, El Chavo, and more. Never repeats the same reference twice.
+- Escalates in tone. The 9pm message is a suggestion. The 1am message is two words.
+- **Calendar awareness** (optional): if you have a standup at 9am, it will tell you. "Bhai kal 9am standup hai bidu. So ja."
 - Logs every reminder to Obsidian so you can see your own patterns and feel appropriately judged
 - Lets you snooze it if you're "almost done" (you're not almost done)
 
@@ -133,6 +135,25 @@ The messages escalate:
 - **Tier 1 (9pm):** "bhai thanda le zara" — warm, casual, a friend noticing
 - **Tier 2 (11pm):** "bhai seriously laptop band kar" — firmer, still loving
 - **Tier 3 (1am):** "bhai so ja yaar. kal dekh lena. sach mein." — short sentences. no jokes. it's time.
+
+---
+
+## Calendar Awareness (Optional)
+
+When `calendar: true` is set in your config, /chill checks your first meeting tomorrow and weaves it into the message naturally.
+
+> "aye Swapnil bidu, kal 9am standup hai. band kar laptop aur so ja."
+
+**Manual `/chill`:** Uses Google Calendar MCP directly (requires MCP connected to your Claude account).
+
+**Auto-fire hook:** Reads a cache file at `/tmp/chill_calendar_cache.txt`. Populate it by running `scripts/fetch_calendar.sh` on a schedule:
+
+```bash
+# Add to crontab (runs every day at 6pm)
+0 18 * * * bash ~/.claude/skills/chill/scripts/fetch_calendar.sh
+```
+
+`fetch_calendar.sh` also uses `claude -p` with Calendar MCP to get tomorrow's first event and writes it to the cache. If you're not comfortable connecting Calendar MCP, leave `calendar: false` — everything else works fine.
 
 ---
 

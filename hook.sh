@@ -11,9 +11,15 @@ LANGUAGES_DIR="$SKILL_DIR/languages"
 
 FORCE=0
 FORCED_TIER=""
-for arg in "$@"; do
-  [ "$arg" = "--force" ] && FORCE=1
-  [[ "$arg" =~ ^--tier=([1-3])$ ]] && FORCED_TIER="${BASH_REMATCH[1]}"
+CALENDAR_ARG=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --force) FORCE=1 ;;
+    --tier=*) FORCED_TIER="${1#--tier=}" ;;
+    --calendar-event) shift; CALENDAR_ARG="$1" ;;
+    --calendar-event=*) CALENDAR_ARG="${1#--calendar-event=}" ;;
+  esac
+  shift
 done
 
 HOUR=$(date +%-H)
@@ -75,6 +81,21 @@ FILM_INDUSTRY=$(grep '^film_industry:' "$LANG_FILE" | sed 's/film_industry: *//'
 TONE=$(awk "/^  tier${TIER}:/{found=1; next} found{print; exit}" "$LANG_FILE" | sed 's/^ *"//' | sed 's/"$//')
 FOLLOW_UP=$(grep -A2 '^follow_up:' "$LANG_FILE" | grep 'text:' | sed 's/.*text: *//' | tr -d '"' | sed "s/{n}/$SNOOZE_MINS/g")
 
+# Calendar context — from --calendar-event arg (live MCP, passed by SKILL.md)
+# or from cache file (populated by scripts/fetch_calendar.sh for auto-fire)
+CALENDAR_CONTEXT=""
+if [ -n "$CALENDAR_ARG" ]; then
+  CALENDAR_CONTEXT="Also: their first meeting tomorrow is $CALENDAR_ARG — weave this in naturally if it strengthens the message."
+else
+  CALENDAR_ENABLED=$(grep 'calendar:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+  if [ "$CALENDAR_ENABLED" = "true" ] && [ -f "/tmp/chill_calendar_cache.txt" ]; then
+    CALENDAR_EVENT=$(cat /tmp/chill_calendar_cache.txt)
+    if [ -n "$CALENDAR_EVENT" ] && [ "$CALENDAR_EVENT" != "none" ]; then
+      CALENDAR_CONTEXT="Also: their first meeting tomorrow is $CALENDAR_EVENT — weave this in naturally if it strengthens the message."
+    fi
+  fi
+fi
+
 # Generate message via claude -p subprocess (fresh context, ~300 tokens, Haiku pricing)
 if command -v claude &>/dev/null; then
   PROMPT="Generate one chill reminder message for a developer named $NAME who has been coding too late at night.
@@ -82,12 +103,12 @@ if command -v claude &>/dev/null; then
 Register: $REGISTER
 Film universe for parody references: $FILM_INDUSTRY
 Tone for this tier: $TONE
+$CALENDAR_CONTEXT
 
 Rules:
 - Write in the language register described, NOT in English
 - Address $NAME by name
 - Maximum 2 lines
-- You may include a film parody — pick one you haven't used recently, vary it
 - Output ONLY the message itself, no quotes, no explanation, no English translation"
 
   MSG=$(claude -p "$PROMPT" --model claude-haiku-4-5-20251001 2>/dev/null)

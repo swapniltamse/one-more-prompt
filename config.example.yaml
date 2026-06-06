@@ -13,5 +13,10 @@ thresholds:
 
 snooze_minutes: 30
 
+# Optional: calendar awareness
+# Requires Google Calendar MCP connected to your Claude account
+# For auto-fire: run scripts/fetch_calendar.sh on a schedule to populate the cache
+calendar: false
+
 # Path to your Obsidian Claude Sessions folder (leave empty to disable logging)
 obsidian_log: ""

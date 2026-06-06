@@ -128,6 +128,40 @@ For the auto-fire hook: it reads a cache file at `/tmp/chill_calendar_cache.txt`
 
 ---
 
+## Using with Other Tools
+
+The hook script works with any AI coding tool that supports running a shell command after tool calls. The only Claude-specific part is the message generation. You can swap that out.
+
+Set `model_cmd` in your `config.yaml` to use a different LLM CLI:
+
+```yaml
+# llm (Simon Willison's tool — works with OpenAI, Anthropic, local models)
+model_cmd: "llm"
+
+# shell-gpt
+model_cmd: "sgpt"
+
+# local Ollama model
+model_cmd: "ollama run llama3"
+
+# Gemini CLI
+model_cmd: "gemini -p"
+```
+
+The command receives the prompt as its last argument. Output goes directly to your terminal as the chill message.
+
+For wiring the hook in other tools:
+
+| Tool | Hook type | Config location |
+|------|-----------|----------------|
+| Claude Code | PostToolUse | `~/.claude/settings.json` |
+| Codex CLI | after-tool | `~/.codex/config.toml` |
+| Gemini CLI | PostToolUse | `~/.gemini/settings.json` |
+
+`install.sh` currently wires Claude Code only. For other tools, add the equivalent hook manually pointing to `bash ~/.claude/skills/chill/hook.sh`.
+
+---
+
 ## Adding a New Language
 
 1. Copy `languages/en.yaml` as a template

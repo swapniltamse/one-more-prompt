@@ -13,11 +13,14 @@ FORCE=0
 FORCED_TIER=""
 CALENDAR_ARG=""
 FORCED_LANG=""
+MODEL_CMD_ARG=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --force) FORCE=1 ;;
     --tier=*) FORCED_TIER="${1#--tier=}" ;;
     --lang=*) FORCED_LANG="${1#--lang=}" ;;
+    --model-cmd=*) MODEL_CMD_ARG="${1#--model-cmd=}" ;;
+    --model-cmd) shift; MODEL_CMD_ARG="$1" ;;
     --calendar-event) shift; CALENDAR_ARG="$1" ;;
     --calendar-event=*) CALENDAR_ARG="${1#--calendar-event=}" ;;
   esac
@@ -103,9 +106,13 @@ else
   fi
 fi
 
-# Generate message via claude -p subprocess (fresh context, ~300 tokens, Haiku pricing)
-if command -v claude &>/dev/null; then
-  PROMPT="Generate one chill reminder message for a developer named $NAME who has been coding too late at night.
+# Resolve model command: --model-cmd flag > config model_cmd > claude default
+MODEL_CMD="$MODEL_CMD_ARG"
+if [ -z "$MODEL_CMD" ]; then
+  MODEL_CMD=$(grep '^model_cmd:' "$CONFIG" | sed 's/model_cmd: *//' | tr -d '"')
+fi
+
+PROMPT="Generate one chill reminder message for a developer named $NAME who has been coding too late at night.
 
 Register: $REGISTER
 Film universe for parody references: $FILM_INDUSTRY
@@ -118,16 +125,20 @@ Rules:
 - Maximum 2 lines
 - Output ONLY the message itself, no quotes, no explanation, no English translation"
 
+# Generate message — use custom model_cmd if set, else claude -p (default)
+if [ -n "$MODEL_CMD" ]; then
+  MSG=$(eval "$MODEL_CMD \"$PROMPT\"" 2>/dev/null)
+elif command -v claude &>/dev/null; then
   MSG=$(claude -p "$PROMPT" --model claude-haiku-4-5-20251001 2>/dev/null)
-
-  # Fallback if subprocess fails or returns empty
-  if [ -z "$MSG" ]; then
-    MSG="$NAME bhai, bahut ho gaya aaj. Thoda rest le yaar."
-  fi
 else
   # claude not in PATH — fall back to inline instruction for main session
   echo "It is $(date +'%I:%M %p'). Remind $NAME to take a break. Tier $TIER. Hinglish. Two lines max. No explanation."
   exit 0
+fi
+
+# Fallback if generation failed or returned empty
+if [ -z "$MSG" ]; then
+  MSG="$NAME bhai, bahut ho gaya aaj. Thoda rest le yaar."
 fi
 
 # Output the finished message (main session displays, does not need to generate)

@@ -20,3 +20,12 @@ calendar: false
 
 # Path to your Obsidian Claude Sessions folder (leave empty to disable logging)
 obsidian_log: ""
+
+# Optional: use a different LLM CLI for message generation (default: claude -p)
+# The command receives the prompt as its last argument.
+# Examples:
+#   model_cmd: "llm"                        # Simon Willison's llm tool
+#   model_cmd: "sgpt"                       # shell-gpt
+#   model_cmd: "ollama run llama3"          # local Ollama model
+#   model_cmd: "gemini -p"                  # Gemini CLI
+# model_cmd: ""

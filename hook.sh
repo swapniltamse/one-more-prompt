@@ -10,6 +10,7 @@ LANGUAGES_DIR="$SKILL_DIR/languages"
 [ ! -f "$CONFIG" ] && exit 0
 
 FORCE=0
+NOTIFY=0
 FORCED_TIER=""
 CALENDAR_ARG=""
 FORCED_LANG=""
@@ -17,6 +18,7 @@ MODEL_CMD_ARG=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --force) FORCE=1 ;;
+    --notify) NOTIFY=1 ;;
     --tier=*) FORCED_TIER="${1#--tier=}" ;;
     --lang=*) FORCED_LANG="${1#--lang=}" ;;
     --model-cmd=*) MODEL_CMD_ARG="${1#--model-cmd=}" ;;
@@ -141,8 +143,33 @@ if [ -z "$MSG" ]; then
   MSG="$NAME bhai, bahut ho gaya aaj. Thoda rest le yaar."
 fi
 
-# Output the finished message (main session displays, does not need to generate)
-printf '\n%s\n\n%s\n' "$MSG" "$FOLLOW_UP"
+# Output — terminal print or system notification depending on --notify flag
+if [ "$NOTIFY" -eq 1 ]; then
+  # Send OS notification (for cron/Task Scheduler fires outside Claude Code)
+  SAFE_MSG=$(echo "$MSG" | sed "s/'/\`'/g" | sed 's/"/\\"/g')
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    osascript -e "display notification \"$MSG\" with title \"/chill\"" 2>/dev/null
+  elif command -v notify-send &>/dev/null; then
+    notify-send "/chill" "$MSG" 2>/dev/null
+  elif command -v powershell.exe &>/dev/null; then
+    # Windows (Git Bash or WSL) — system tray balloon tip
+    powershell.exe -WindowStyle Hidden -NonInteractive -Command "
+Add-Type -AssemblyName System.Windows.Forms
+\$n = New-Object System.Windows.Forms.NotifyIcon
+\$n.Icon = [System.Drawing.SystemIcons]::Application
+\$n.BalloonTipTitle = '/chill'
+\$n.BalloonTipText = '$SAFE_MSG'
+\$n.BalloonTipIcon = 'None'
+\$n.Visible = \$true
+\$n.ShowBalloonTip(7000)
+Start-Sleep 7
+\$n.Dispose()
+" &
+  fi
+else
+  # Print to terminal (Claude Code PostToolUse session)
+  printf '\n%s\n\n%s\n' "$MSG" "$FOLLOW_UP"
+fi
 
 # Log to Obsidian directly — no Claude involvement
 if [ -n "$OBSIDIAN_LOG" ]; then

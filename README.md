@@ -62,9 +62,21 @@ git clone https://github.com/swapniltamse/one-more-prompt ~/.claude/skills/chill
 bash ~/.claude/skills/chill/install.sh
 ```
 
-The installer asks your name, language, and timezone, then registers the PostToolUse hook in `~/.claude/settings.json` automatically. Run it once. That's it.
+The installer runs three steps and tells you exactly what it's doing at each one:
 
-Claude will now gently, then firmly, then urgently, tell you to go to sleep.
+**Step 1 — config.yaml.** Asks your name, language, and timezone. Skipped if config already exists.
+
+**Step 2 — Claude Code hook.** Adds one entry to `~/.claude/settings.json` under `hooks.PostToolUse`. This fires after every Claude Code tool call and prints your reminder in the terminal. Safe to run twice — it checks before adding.
+
+**Step 3 — System notifications (optional, you choose y/n).** For when you're on claude.ai, Cursor, VS Code, or anywhere else. On Windows, creates 3 tasks in Task Scheduler under `chill\` — one per threshold. On macOS/Linux, adds 3 cron entries. The installer prints exactly what it will register before doing it. Tasks run as your user account. No admin rights required.
+
+To remove everything:
+
+```bash
+bash ~/.claude/skills/chill/uninstall.sh
+```
+
+This removes the settings.json hook, the scheduled tasks or cron entries, and optionally your config.yaml. The skill files stay unless you delete them manually.
 
 ### Manual setup (optional)
 
@@ -74,7 +86,7 @@ If you prefer to configure by hand or already have a `config.yaml`:
 cp ~/.claude/skills/chill/config.example.yaml ~/.claude/skills/chill/config.yaml
 # edit config.yaml, then:
 bash ~/.claude/skills/chill/install.sh
-# installer will skip config questions and only register the hook
+# installer skips config questions and goes straight to hook + notification setup
 ```
 
 ---

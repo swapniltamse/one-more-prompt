@@ -19,7 +19,25 @@ Determine the mode from the arguments and follow the instructions for that mode 
 
 ## MODE: FIRE (default)
 
-**Trigger:** No arguments, or invoked automatically by the hook.
+**Trigger:** No arguments, any unrecognised arguments, or invoked automatically by the hook.
+
+### Step 0 — Detect language override (optional)
+
+If the arguments contain a language hint, resolve it to an ISO code and pass `--lang=XX` to the hook.
+
+| User says | --lang value |
+|-----------|-------------|
+| in hindi / hindi mein | hi |
+| in marathi / marathi mein | mr |
+| in english | en |
+| in tamil | ta |
+| in kannada | kn |
+| in arabic | ar |
+| in spanish | es |
+| in portuguese | pt |
+| in irish | en-ie |
+
+If no language hint is found, omit `--lang` entirely (hook picks randomly from config).
 
 ### Step 1 — Check calendar (optional)
 
@@ -33,14 +51,10 @@ Read `~/.claude/skills/chill/config.yaml`. If `calendar: true`:
 
 Run and output verbatim. No commentary before or after.
 
-**With calendar:**
-```bash
-bash ~/.claude/skills/chill/hook.sh --force --calendar-event "HH:MM EventTitle"
-```
+Combine flags as needed — all are optional:
 
-**Without calendar:**
 ```bash
-bash ~/.claude/skills/chill/hook.sh --force
+bash ~/.claude/skills/chill/hook.sh --force [--lang=XX] [--calendar-event "HH:MM EventTitle"]
 ```
 
 ---

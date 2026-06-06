@@ -12,10 +12,12 @@ LANGUAGES_DIR="$SKILL_DIR/languages"
 FORCE=0
 FORCED_TIER=""
 CALENDAR_ARG=""
+FORCED_LANG=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --force) FORCE=1 ;;
     --tier=*) FORCED_TIER="${1#--tier=}" ;;
+    --lang=*) FORCED_LANG="${1#--lang=}" ;;
     --calendar-event) shift; CALENDAR_ARG="$1" ;;
     --calendar-event=*) CALENDAR_ARG="${1#--calendar-event=}" ;;
   esac
@@ -57,13 +59,18 @@ fi
 # Read config values
 NAME=$(grep '^name:' "$CONFIG" | awk '{print $2}' | tr -d '"')
 
-# Support both `languages: [hi, mr, en]` (multi) and `language: hi` (single)
-LANGS_RAW=$(grep '^languages:' "$CONFIG" | sed 's/languages: *//' | tr -d '[]"' | tr ',' ' ')
-if [ -n "$LANGS_RAW" ]; then
-  LANG_ARRAY=($LANGS_RAW)
-  LANG=${LANG_ARRAY[$RANDOM % ${#LANG_ARRAY[@]}]}
+# Support --lang=XX override, else random from config
+if [ -n "$FORCED_LANG" ]; then
+  LANG="$FORCED_LANG"
 else
-  LANG=$(grep '^language:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+  # Support both `languages: [hi, mr, en]` (multi) and `language: hi` (single)
+  LANGS_RAW=$(grep '^languages:' "$CONFIG" | sed 's/languages: *//' | tr -d '[]"' | tr ',' ' ')
+  if [ -n "$LANGS_RAW" ]; then
+    LANG_ARRAY=($LANGS_RAW)
+    LANG=${LANG_ARRAY[$RANDOM % ${#LANG_ARRAY[@]}]}
+  else
+    LANG=$(grep '^language:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+  fi
 fi
 OBSIDIAN_LOG=$(grep 'obsidian_log:' "$CONFIG" | sed 's/obsidian_log: *//' | tr -d '"')
 SNOOZE_MINS=$(grep 'snooze_minutes' "$CONFIG" | awk '{print $2}' | tr -d '"')

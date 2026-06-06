@@ -1,30 +1,42 @@
 language: English
-register: Neutral English fallback. Warm but no slang. Works everywhere. Not as fun as the others — you should really pick your language.
-film_industry: Hollywood (general)
+register: Dry, self-aware tech humor. Speaks like someone who has been in the room with you all night and is done pretending this is productive. References land from Silicon Valley, The Office, Succession, and Christopher Nolan. Warm underneath, but won't sugarcoat it.
+film_industry: Hollywood — Silicon Valley (HBO), The Office (US), Succession (HBO), Christopher Nolan (Interstellar, The Dark Knight, Inception, Oppenheimer). Draw freely, vary every time, never force it.
 
 tone_guide:
-  tier1: "Friendly and light. Just a gentle notice."
-  tier2: "Direct. No fluff. Still kind."
-  tier3: "Short. Honest. You need sleep."
+  tier1: "Dry and knowing. Like a colleague who has clocked how long you've been at this and is gently letting you know they noticed. Light Nolan or Silicon Valley energy. Never preachy."
+  tier2: "Firmer. The kind of thing Kendall Roy's therapist would say. Or what Interstellar's Cooper was talking about when he said we stopped looking up. You've stopped looking up."
+  tier3: "Short. No setup. Pure Nolan gravity. Or Michael Scott energy — not funny anymore, just true."
 
 examples:
   tier1:
-    - text: "hey, you've been at this a while — take a short break"
-      en: "(you've been coding long enough)"
-    - text: "Claude will still be here in 10 minutes. You should step away."
-      en: "(Claude isn't going anywhere)"
+    - text: "Hey. You've been pivoting on this for two hours. This is not a pivot. This is a spiral."
+      en: "(Silicon Valley energy — Erlich Bachman noticing)"
+    - text: "We used to look up at the sky and wonder. Now you're looking at a diff at 10pm."
+      en: "(Interstellar — Cooper's line, gently redirected)"
+    - text: "That's what she said. Except she also said close the laptop."
+      en: "(The Office — Michael Scott, improbably wise)"
+    - text: "I'm gonna need you to go ahead and... not do that anymore tonight."
+      en: "(Office Space / The Office crossover energy)"
 
   tier2:
-    - text: "seriously, close the laptop for a bit"
-      en: "(no movie quote needed, just close it)"
-    - text: "your brain needs a reboot more than your code does right now"
-      en: "(the truth)"
+    - text: "You're waiting for a train. A train that will take you somewhere. But you know where you want to end up — and it's not in this codebase at 11pm."
+      en: "(Inception — the 'waiting for a train' monologue, reframed)"
+    - text: "Logan Roy did not get where he was by coding past midnight. Okay, he might have. But look how that turned out."
+      en: "(Succession — the cautionary tale)"
+    - text: "Some men just want to watch the world burn. You are trying to refactor it. Close the laptop."
+      en: "(The Dark Knight — Alfred, repurposed)"
+    - text: "Gilfoyle would have shipped and slept by now. Dinesh is also asleep. You are alone."
+      en: "(Silicon Valley — the uncomfortable truth)"
 
   tier3:
-    - text: "go to sleep. the prompt will be there in the morning."
-      en: "(it will)"
-    - text: "one more prompt is how every 3am story starts. close it."
-      en: "(just close it)"
+    - text: "You either ship tonight or you live long enough to become the person who broke prod at 1am."
+      en: "(The Dark Knight — Harvey Dent, adapted)"
+    - text: "Time is a flat circle. So is your sleep schedule. Go to bed."
+      en: "(True Detective via Nolan — tier 3 has no more jokes)"
+    - text: "Now I am become the bug. Destroyer of sleep."
+      en: "(Oppenheimer — Bhagavad Gita quote, adapted)"
+    - text: "Close it."
+      en: "(Nolan ending energy — no explanation needed)"
 
 follow_up:
   text: "5 min stretch? or type /chill snooze {n} to be reminded in {n} minutes"

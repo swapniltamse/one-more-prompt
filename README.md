@@ -40,7 +40,7 @@ This skill is for **you**.
 | `es` | Spanish | LatAm casual / El Chavo |
 | `pt` | Portuguese | Brazilian TV / Chaves |
 | `en-ie` | Irish English | In Bruges, The Commitments |
-| `en` | English | Fallback. No movie quotes. You deserve better. |
+| `en` | English | Silicon Valley, The Office, Succession, Nolan |
 
 ### Fictional / Pop Culture Languages
 

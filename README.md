@@ -134,6 +134,8 @@ The messages escalate:
 
 - **Tier 1 (9pm):** "bhai thanda le zara" — warm, casual, a friend noticing
 - **Tier 2 (11pm):** "Swapnil... just chill yaar. Dhondu style. laptop band. bas." — firmer, still loving
+
+  ![Dhondu just chill](https://media1.tenor.com/m/cVOPRBRLThsAAAAC/all-the-best-sanjay-mishra-raghu-dhondu-just-chill.gif)
 - **Tier 3 (1am):** "bas bidu. so ja." — short sentences. no jokes. it's time.
 
 ---

@@ -133,8 +133,8 @@ Every message is generated fresh from the tone guide and film references in your
 The messages escalate:
 
 - **Tier 1 (9pm):** "bhai thanda le zara" — warm, casual, a friend noticing
-- **Tier 2 (11pm):** "bhai seriously laptop band kar" — firmer, still loving
-- **Tier 3 (1am):** "bhai so ja yaar. kal dekh lena. sach mein." — short sentences. no jokes. it's time.
+- **Tier 2 (11pm):** "Swapnil... just chill yaar. Dhondu style. laptop band. bas." — firmer, still loving
+- **Tier 3 (1am):** "bas bidu. so ja." — short sentences. no jokes. it's time.
 
 ---
 

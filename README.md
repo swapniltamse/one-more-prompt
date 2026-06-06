@@ -196,6 +196,8 @@ I recognized it. I do it too.
 
 Send it to whoever needs it.
 
+The tapori register was inspired by [bhai-lang](https://github.com/DulLabs/bhai-lang). If bhai-lang could make `print` feel like home, /chill could make "close the laptop" feel the same way.
+
 ---
 
 ## Contributing

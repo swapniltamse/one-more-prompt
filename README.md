@@ -57,57 +57,25 @@ This skill is for **you**.
 
 ## Installation
 
-### 1. Clone the skill
-
 ```bash
 git clone https://github.com/swapniltamse/one-more-prompt ~/.claude/skills/chill
+bash ~/.claude/skills/chill/install.sh
 ```
 
-### 2. Copy and edit config
+The installer asks your name, language, and timezone, then registers the PostToolUse hook in `~/.claude/settings.json` automatically. Run it once. That's it.
+
+Claude will now gently, then firmly, then urgently, tell you to go to sleep.
+
+### Manual setup (optional)
+
+If you prefer to configure by hand or already have a `config.yaml`:
 
 ```bash
 cp ~/.claude/skills/chill/config.example.yaml ~/.claude/skills/chill/config.yaml
+# edit config.yaml, then:
+bash ~/.claude/skills/chill/install.sh
+# installer will skip config questions and only register the hook
 ```
-
-Edit `config.yaml`:
-
-```yaml
-name: YourName
-language: hi          # pick from the table above
-timezone: America/New_York
-thresholds:
-  - hour: 21
-  - hour: 23
-  - hour: 1
-snooze_minutes: 30
-obsidian_log: "/path/to/your/vault/10 - Claude Sessions/chill-log.md"
-```
-
-### 3. Register the hook
-
-Add this to your `~/.claude/settings.json` under `hooks.PostToolUse`:
-
-```json
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/skills/chill/hook.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### 4. You're done
-
-Claude will now gently, then firmly, then urgently, tell you to go to sleep.
 
 ---
 

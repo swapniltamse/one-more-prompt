@@ -31,21 +31,15 @@ done
 
 HOUR=$(date +%-H)
 DATE=$(date +%Y%m%d)
-FIRED_FLAG="/tmp/chill_fired_${DATE}_${HOUR}.flag"
 SNOOZE_FLAG="/tmp/chill_snooze.flag"
 
-if [ "$FORCE" -eq 0 ]; then
-  # Only fire once per hour window
-  [ -f "$FIRED_FLAG" ] && exit 0
-
-  # Respect snooze
-  if [ -f "$SNOOZE_FLAG" ]; then
-    SNOOZE_MINS=$(grep 'snooze_minutes' "$CONFIG" | awk '{print $2}' | tr -d '"')
-    SNOOZE_MINS=${SNOOZE_MINS:-30}
-    SNOOZE_AGE=$(( ($(date +%s) - $(date -r "$SNOOZE_FLAG" +%s 2>/dev/null || echo 0)) / 60 ))
-    [ "$SNOOZE_AGE" -lt "$SNOOZE_MINS" ] && exit 0
-    rm -f "$SNOOZE_FLAG"
-  fi
+# Snooze check runs before tier (doesn't depend on it)
+if [ "$FORCE" -eq 0 ] && [ -f "$SNOOZE_FLAG" ]; then
+  SNOOZE_MINS=$(grep 'snooze_minutes' "$CONFIG" | awk '{print $2}' | tr -d '"')
+  SNOOZE_MINS=${SNOOZE_MINS:-30}
+  SNOOZE_AGE=$(( ($(date +%s) - $(date -r "$SNOOZE_FLAG" +%s 2>/dev/null || echo 0)) / 60 ))
+  [ "$SNOOZE_AGE" -lt "$SNOOZE_MINS" ] && exit 0
+  rm -f "$SNOOZE_FLAG"
 fi
 
 # Map current time to tier — reads thresholds from config, supports HH:MM and legacy hour: N
@@ -103,7 +97,12 @@ else
   [ -z "$TIER" ] && { [ "$FORCE" -eq 1 ] && TIER="1" || exit 0; }
 fi
 
-[ "$FORCE" -eq 0 ] && touch "$FIRED_FLAG"
+# Per-tier flag: each tier fires at most once per day, independently
+FIRED_FLAG="/tmp/chill_fired_${DATE}_tier${TIER}.flag"
+if [ "$FORCE" -eq 0 ]; then
+  [ -f "$FIRED_FLAG" ] && exit 0
+  touch "$FIRED_FLAG"
+fi
 
 # Read config values
 NAME=$(grep '^name:' "$CONFIG" | awk '{print $2}' | tr -d '"')

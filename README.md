@@ -142,34 +142,46 @@ Tone is doing real work here too. A message that sounds like a friend catches yo
 
 ### The messages escalate
 
-Each message has two parts: a psychological reframe first, then the tapori line. The reframe does the actual work. The tapori line makes it feel like a friend, not a productivity app.
+Each message has two parts: a reframe first, then the tapori line. The reframe names what is actually happening. The tapori line makes it feel like a friend, not an app.
 
 **Tier 1 — 9pm (warm, a friend noticing):**
 ```
-Kal subah 9 baje wala Swapnil ye bug 15 minute mein fix karega.
-Aaj raat wala ise aur bada karega.
+Aye bidu, kal subah 9 baje tu ye 15 minute mein fix kar dega.
+Aaj raat? Aur bada kar dega. Pakka.
 Bhai thanda le zara — tu almost done nahi hai, tu almost thaka hua hai.
 ```
 
-**Tier 2 — 11pm (firmer, still loving):**
+**Tier 2 — 11pm (firmer, done waiting):**
 ```
-Tera dimag is kaam ko urgent feel kara raha hai kyunki ye incomplete hai.
-Ye Zeigarnik effect hai, real deadline nahi.
-Swapnil... bidu, laptop band kar. Dhondu style. Bas.
-```
-
-**Tier 3 — 1am (short sentences, no jokes):**
-```
-Thaka hua brain bugs fix nahi karta. Naye banata hai.
-Bas. So ja.
+Ye 'urgent' feeling apun jaanta hai kahan se aati hai.
+Kaam adha hai toh dimag chalta rehta hai. Actual deadline kuch nahi. Chal so.
+Tu Babu Bhaiya mode mein hai — har plan ke baad ek aur plan. Aaj ka plan: band kar aur so ja.
 ```
 
-English equivalent (Tier 1):
+**Tier 3 — 1am (two words, no jokes):**
+```
+bas bidu. so ja.
+```
+
+English (Tier 1):
 ```
 The 9am version of you fixes this in 15 minutes.
 The midnight version creates two new bugs and doesn't notice.
 You are not almost done. You are almost asleep.
 ```
+
+### Context-aware mode
+
+When `context_aware: true` is set, the hook reads what you were just doing and calls you out specifically. Real example from a live session:
+
+```
+> /chill
+
+Swapnil bhai, tune abhi API cost compare kiya — Haiku vs Opus vs Sonnet.
+Matlab tu abhi productivity calculate kar raha hai, kaam nahi. Chal band kar.
+```
+
+It read the last tool call, saw a cost comparison, and named exactly what was happening. No generic reminder. Enable it with `context_aware: true` in config.yaml. Takes ~25 seconds to generate. Worth it.
 
 ![Dhondu just chill](https://media1.tenor.com/m/cVOPRBRLThsAAAAC/all-the-best-sanjay-mishra-raghu-dhondu-just-chill.gif)
 

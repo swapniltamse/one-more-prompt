@@ -26,6 +26,10 @@ This skill is for you.
 - Logs every reminder to Obsidian so you can see your own patterns and feel appropriately judged
 - Lets you snooze it if you're "almost done" (you're not almost done)
 
+
+https://github.com/user-attachments/assets/53a08815-ef2a-4301-944f-c3f53232fa0f
+
+
 ---
 
 ## Supported languages

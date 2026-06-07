@@ -7,9 +7,9 @@ language: hi                        # single language — hi | ar | ta | kn | mr
 timezone: America/New_York          # IANA timezone string
 
 thresholds:
-  - hour: 21                        # 9pm  — tier 1: gentle nudge
-  - hour: 23                        # 11pm — tier 2: firmer
-  - hour: 1                         # 1am  — tier 3: no more jokes
+  - time: "21:00"   # 9pm   — tier 1: gentle nudge
+  - time: "23:00"   # 11pm  — tier 2: firmer
+  - time: "01:00"   # 1am   — tier 3: no more jokes
 
 snooze_minutes: 30
 

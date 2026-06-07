@@ -48,14 +48,58 @@ if [ "$FORCE" -eq 0 ]; then
   fi
 fi
 
-# Map hour to tier
+# Map current time to tier — reads thresholds from config, supports HH:MM and legacy hour: N
 if [ -n "$FORCED_TIER" ]; then
   TIER="$FORCED_TIER"
 else
   TIER=""
-  if [[ $HOUR -eq 21 || $HOUR -eq 22 ]]; then TIER="1"; fi
-  if [[ $HOUR -eq 23 || $HOUR -eq 0 ]]; then TIER="2"; fi
-  if [[ $HOUR -ge 1 && $HOUR -le 3 ]]; then TIER="3"; fi
+  MIN=$(date +%-M)
+
+  # Convert HH MM to minutes-since-6pm, wrapping midnight.
+  # Hours 0-17 get +1440 so post-midnight times sort correctly after pre-midnight ones.
+  to_mins() {
+    local h=$1 m=$2 v
+    v=$(( h * 60 + m ))
+    [ "$h" -lt 18 ] && v=$(( v + 1440 ))
+    echo "$v"
+  }
+
+  # Parse one threshold line (supports `time: "HH:MM"` and legacy `hour: N`) → minutes
+  parse_thresh() {
+    local raw=$1
+    if echo "$raw" | grep -q 'time:'; then
+      local val; val=$(echo "$raw" | sed 's/.*time: *//' | tr -d '"' | tr -d "'")
+      local h; h=$(echo "$val" | cut -d: -f1 | sed 's/^0*//' ); h=${h:-0}
+      local m; m=$(echo "$val" | cut -d: -f2 | sed 's/^0*//' ); m=${m:-0}
+      to_mins "$h" "$m"
+    else
+      local h; h=$(echo "$raw" | awk '{print $NF}' | tr -d '"')
+      to_mins "$h" 0
+    fi
+  }
+
+  THRESH_LINES=$(grep -A20 '^thresholds:' "$CONFIG" | grep -E '^\s*- (time|hour):')
+  T1_RAW=$(echo "$THRESH_LINES" | awk 'NR==1')
+  T2_RAW=$(echo "$THRESH_LINES" | awk 'NR==2')
+  T3_RAW=$(echo "$THRESH_LINES" | awk 'NR==3')
+
+  if [ -n "$T1_RAW" ] && [ -n "$T2_RAW" ] && [ -n "$T3_RAW" ]; then
+    NOW=$(to_mins "$HOUR" "$MIN")
+    T1=$(parse_thresh "$T1_RAW")
+    T2=$(parse_thresh "$T2_RAW")
+    T3=$(parse_thresh "$T3_RAW")
+    T3_END=$(( T3 + 180 ))
+    if   [ "$NOW" -ge "$T1" ] && [ "$NOW" -lt "$T2" ]; then TIER="1"
+    elif [ "$NOW" -ge "$T2" ] && [ "$NOW" -lt "$T3" ]; then TIER="2"
+    elif [ "$NOW" -ge "$T3" ] && [ "$NOW" -lt "$T3_END" ]; then TIER="3"
+    fi
+  else
+    # Fallback if config thresholds are missing or malformed
+    [[ $HOUR -eq 21 || $HOUR -eq 22 ]] && TIER="1"
+    [[ $HOUR -eq 23 || $HOUR -eq 0 ]] && TIER="2"
+    [[ $HOUR -ge 1 && $HOUR -le 3 ]] && TIER="3"
+  fi
+
   [ -z "$TIER" ] && { [ "$FORCE" -eq 1 ] && TIER="1" || exit 0; }
 fi
 

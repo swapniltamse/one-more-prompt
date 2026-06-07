@@ -58,6 +58,17 @@ else
   TZ="${TZ:-America/New_York}"
   echo ""
 
+  read -p "When should I start nudging you? (HH:MM, e.g. 22:30 for 10:30pm) [21:00]: " START_TIME
+  START_TIME="${START_TIME:-21:00}"
+  # Derive tier 2 (+2h) and tier 3 (+4h) from start time
+  START_H=$(echo "$START_TIME" | cut -d: -f1 | sed 's/^0*//' ); START_H=${START_H:-21}
+  START_M=$(echo "$START_TIME" | cut -d: -f2 | sed 's/^0*//' ); START_M=${START_M:-0}
+  T2_H=$(( (START_H + 2) % 24 ))
+  T3_H=$(( (START_H + 4) % 24 ))
+  T2_TIME=$(printf "%02d:%02d" "$T2_H" "$START_M")
+  T3_TIME=$(printf "%02d:%02d" "$T3_H" "$START_M")
+  echo ""
+
   read -p "Path to your Obsidian Claude Sessions folder (leave blank to skip): " OBSIDIAN
 
   cat > "$CONFIG" <<EOF
@@ -66,9 +77,9 @@ language: $LANG
 timezone: $TZ
 
 thresholds:
-  - hour: 21    # 9pm  — tier 1: gentle nudge
-  - hour: 23    # 11pm — tier 2: firmer
-  - hour: 1     # 1am  — tier 3: no more jokes
+  - time: "$START_TIME"   # tier 1: gentle nudge
+  - time: "$T2_TIME"      # tier 2: firmer (+2h)
+  - time: "$T3_TIME"      # tier 3: no more jokes (+4h)
 
 snooze_minutes: 30
 calendar: false
@@ -136,27 +147,45 @@ echo "  Cursor, VS Code, or just a YouTube rabbit hole at 1am."
 echo ""
 echo "  What this will do:"
 
-# Read thresholds from config
-TIER1_HOUR=$(grep -A10 '^thresholds:' "$CONFIG" | grep '- hour:' | awk 'NR==1{print $3}')
-TIER2_HOUR=$(grep -A10 '^thresholds:' "$CONFIG" | grep '- hour:' | awk 'NR==2{print $3}')
-TIER3_HOUR=$(grep -A10 '^thresholds:' "$CONFIG" | grep '- hour:' | awk 'NR==3{print $3}')
-TIER1_HOUR=${TIER1_HOUR:-21}
-TIER2_HOUR=${TIER2_HOUR:-23}
-TIER3_HOUR=${TIER3_HOUR:-1}
+# Read thresholds from config — supports `time: "HH:MM"` and legacy `hour: N`
+parse_threshold_time() {
+  local raw=$1
+  if echo "$raw" | grep -q 'time:'; then
+    echo "$raw" | sed 's/.*time: *//' | tr -d '"' | tr -d "'"
+  else
+    local h; h=$(echo "$raw" | awk '{print $NF}' | tr -d '"')
+    printf "%02d:00" "$h"
+  fi
+}
+
+THRESH_LINES=$(grep -A10 '^thresholds:' "$CONFIG" | grep -E '- (time|hour):')
+T1_TIME=$(parse_threshold_time "$(echo "$THRESH_LINES" | awk 'NR==1')")
+T2_TIME=$(parse_threshold_time "$(echo "$THRESH_LINES" | awk 'NR==2')")
+T3_TIME=$(parse_threshold_time "$(echo "$THRESH_LINES" | awk 'NR==3')")
+T1_TIME=${T1_TIME:-21:00}
+T2_TIME=${T2_TIME:-23:00}
+T3_TIME=${T3_TIME:-01:00}
+
+TIER1_HOUR=$(echo "$T1_TIME" | cut -d: -f1 | sed 's/^0*//' ); TIER1_HOUR=${TIER1_HOUR:-21}
+TIER2_HOUR=$(echo "$T2_TIME" | cut -d: -f1 | sed 's/^0*//' ); TIER2_HOUR=${TIER2_HOUR:-23}
+TIER3_HOUR=$(echo "$T3_TIME" | cut -d: -f1 | sed 's/^0*//' ); TIER3_HOUR=${TIER3_HOUR:-1}
+TIER1_MIN=$(echo "$T1_TIME" | cut -d: -f2 | sed 's/^0*//' ); TIER1_MIN=${TIER1_MIN:-0}
+TIER2_MIN=$(echo "$T2_TIME" | cut -d: -f2 | sed 's/^0*//' ); TIER2_MIN=${TIER2_MIN:-0}
+TIER3_MIN=$(echo "$T3_TIME" | cut -d: -f2 | sed 's/^0*//' ); TIER3_MIN=${TIER3_MIN:-0}
 
 if [ "$OS" = "windows" ] || [ "$OS" = "wsl" ]; then
   echo "    - Creates 3 tasks in Windows Task Scheduler under 'chill\'"
-  echo "      chill\chill-tier1  — fires at ${TIER1_HOUR}:00 daily"
-  echo "      chill\chill-tier2  — fires at ${TIER2_HOUR}:00 daily"
-  echo "      chill\chill-tier3  — fires at ${TIER3_HOUR}:00 daily"
+  echo "      chill\chill-tier1  — fires at ${T1_TIME} daily"
+  echo "      chill\chill-tier2  — fires at ${T2_TIME} daily"
+  echo "      chill\chill-tier3  — fires at ${T3_TIME} daily"
   echo "    - Tasks run as your user account. No admin rights required."
   echo "    - Shows a Windows system tray notification with your message."
   echo "    - To view: open Task Scheduler > Task Scheduler Library > chill"
 else
   echo "    - Adds 3 lines to your crontab (crontab -l to verify):"
-  printf "      0 %s * * * bash %s/hook.sh --notify --force --tier=1\n" "$TIER1_HOUR" "$SKILL_DIR"
-  printf "      0 %s * * * bash %s/hook.sh --notify --force --tier=2\n" "$TIER2_HOUR" "$SKILL_DIR"
-  printf "      0 %s * * * bash %s/hook.sh --notify --force --tier=3\n" "$TIER3_HOUR" "$SKILL_DIR"
+  printf "      %s %s * * * bash %s/hook.sh --notify --force --tier=1\n" "$TIER1_MIN" "$TIER1_HOUR" "$SKILL_DIR"
+  printf "      %s %s * * * bash %s/hook.sh --notify --force --tier=2\n" "$TIER2_MIN" "$TIER2_HOUR" "$SKILL_DIR"
+  printf "      %s %s * * * bash %s/hook.sh --notify --force --tier=3\n" "$TIER3_MIN" "$TIER3_HOUR" "$SKILL_DIR"
   echo "    - Sends a system notification (macOS: Notification Center,"
   echo "      Linux: notify-send)."
 fi
@@ -180,39 +209,38 @@ if [[ "$SETUP_NOTIFY" =~ ^[Yy]$ ]]; then
     fi
 
     register_task() {
-      local hour=$1
+      local time=$1
       local tier=$2
       local task_name="chill\\chill-tier${tier}"
-      local hour_padded
-      hour_padded=$(printf "%02d" "$hour")
-      echo "  Registering Task Scheduler task: $task_name at ${hour_padded}:00..."
+      echo "  Registering Task Scheduler task: $task_name at ${time}..."
       schtasks.exe /create \
         /tn "$task_name" \
         /tr "\"$WIN_BASH\" \"$WIN_HOOK\" --notify --force --tier=${tier}" \
         /sc daily \
-        /st "${hour_padded}:00" \
+        /st "$time" \
         /f 2>/dev/null && echo "    Done." || echo "    Failed — check Task Scheduler manually."
     }
 
-    register_task "$TIER1_HOUR" 1
-    register_task "$TIER2_HOUR" 2
-    register_task "$TIER3_HOUR" 3
+    register_task "$T1_TIME" 1
+    register_task "$T2_TIME" 2
+    register_task "$T3_TIME" 3
 
   else
     # macOS / Linux: cron
     register_cron() {
-      local hour=$1
-      local tier=$2
+      local min=$1
+      local hour=$2
+      local tier=$3
       local cron_tag="# chill-tier${tier}"
-      local cron_line="0 ${hour} * * * bash ${HOOK_PATH} --notify --force --tier=${tier}"
+      local cron_line="${min} ${hour} * * * bash ${HOOK_PATH} --notify --force --tier=${tier}"
       # Remove existing entry for this tier, then add fresh
       ( crontab -l 2>/dev/null | grep -v "$cron_tag"; echo "$cron_tag"; echo "$cron_line" ) | crontab -
-      echo "  cron tier${tier} registered (hour ${hour})."
+      echo "  cron tier${tier} registered (${hour}:$(printf '%02d' "$min"))."
     }
 
-    register_cron "$TIER1_HOUR" 1
-    register_cron "$TIER2_HOUR" 2
-    register_cron "$TIER3_HOUR" 3
+    register_cron "$TIER1_MIN" "$TIER1_HOUR" 1
+    register_cron "$TIER2_MIN" "$TIER2_HOUR" 2
+    register_cron "$TIER3_MIN" "$TIER3_HOUR" 3
   fi
 
   echo ""

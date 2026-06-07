@@ -81,7 +81,7 @@ Walk the user through creating `config.yaml` interactively. Ask each question an
 1. "What's your first name?"
 2. "Pick your language: hi (Hindi), ar (Egyptian Arabic), ta (Tamil), kn (Kannada), mr (Marathi), es (Spanish), pt (Portuguese), en-ie (Irish), en (English)"
 3. "Your timezone (e.g. America/New_York, Asia/Kolkata, Africa/Cairo):"
-4. "What time should I start nudging you? (default: 21 for 9pm)"
+4. "When should I start nudging you? (HH:MM, e.g. 22:30 for 10:30pm, default: 21:00)"
 5. "Path to your Obsidian vault's Claude Sessions folder (or press enter to skip logging):"
 
 Write the completed config to CONFIG. Confirm: "Config saved. Claude will remind {name} starting at {hour}:00 in {language}. Type /chill to test it now."

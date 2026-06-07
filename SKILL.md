@@ -21,12 +21,14 @@ Determine the mode from the arguments and follow the instructions for that mode 
 
 **Trigger:** No arguments, any unrecognised arguments, or invoked automatically by the hook.
 
-### Step 0 — Detect language override (optional)
+Generate the message inline. No subprocess. No hook.sh.
 
-If the arguments contain a language hint, resolve it to an ISO code and pass `--lang=XX` to the hook.
+### Step 0 — Detect language
 
-| User says | --lang value |
-|-----------|-------------|
+If the arguments contain a language hint, resolve to ISO code:
+
+| User says | lang |
+|-----------|------|
 | in hindi / hindi mein | hi |
 | in marathi / marathi mein | mr |
 | in english | en |
@@ -37,17 +39,36 @@ If the arguments contain a language hint, resolve it to an ISO code and pass `--
 | in portuguese | pt |
 | in irish | en-ie |
 
-If no language hint is found, omit `--lang` entirely (hook picks randomly from config).
+### Step 1 — Load config and language pack
 
-### Step 1 — Delegate to hook
+Read `~/.claude/skills/chill/config.yaml`. Extract: `name`, `language`/`languages`, `snooze_minutes`.
 
-Run and output verbatim. No commentary before or after.
+Pick language: use the override from Step 0 if set; otherwise pick randomly from `languages` list, or use `language` if single.
 
-```bash
-bash ~/.claude/skills/chill/hook.sh --force [--lang=XX]
-```
+Read `~/.claude/skills/chill/languages/{lang}.yaml`.
 
-The hook reads `/tmp/chill_calendar_cache.txt` directly. No MCP call here.
+### Step 2 — Determine tier
+
+| Current hour | Tier |
+|-------------|------|
+| 21–22 | 1 |
+| 23–0 | 2 |
+| 1–3 | 3 |
+| anything else | 1 |
+
+Use the system date context. Do not run a Bash command for this.
+
+### Step 3 — Output the message
+
+Generate one message and output it directly. Nothing before it. Nothing after except the follow_up line.
+
+Rules:
+- Write in the language register from the YAML
+- Draw from the film_industry listed
+- Match the tone from `tone_guide.tier{N}`
+- Address the user by name
+- 2 lines maximum
+- Output: message, blank line, `follow_up.text` (replace `{n}` with `snooze_minutes`)
 
 ---
 

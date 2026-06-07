@@ -39,23 +39,15 @@ If the arguments contain a language hint, resolve it to an ISO code and pass `--
 
 If no language hint is found, omit `--lang` entirely (hook picks randomly from config).
 
-### Step 1 — Check calendar (optional)
-
-Read `~/.claude/skills/chill/config.yaml`. If `calendar: true`:
-- Call the Google Calendar MCP to list events for tomorrow
-- Find the first event (earliest start time)
-- Format as: `--calendar-event "HH:MM EventTitle"`
-- If no events or MCP unavailable, omit the flag entirely
-
-### Step 2 — Delegate to hook
+### Step 1 — Delegate to hook
 
 Run and output verbatim. No commentary before or after.
 
-Combine flags as needed — all are optional:
-
 ```bash
-bash ~/.claude/skills/chill/hook.sh --force [--lang=XX] [--calendar-event "HH:MM EventTitle"]
+bash ~/.claude/skills/chill/hook.sh --force [--lang=XX]
 ```
+
+The hook reads `/tmp/chill_calendar_cache.txt` directly. No MCP call here.
 
 ---
 

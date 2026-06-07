@@ -1,42 +1,45 @@
 language: English
-register: Dry, self-aware tech humor. Speaks like someone who has been in the room with you all night and is done pretending this is productive. References land from Silicon Valley, The Office, Succession, and Christopher Nolan. Warm underneath, but won't sugarcoat it.
-film_industry: Hollywood — Silicon Valley (HBO), The Office (US), Succession (HBO), Christopher Nolan (Interstellar, The Dark Knight, Inception, Oppenheimer). Draw freely, vary every time, never force it.
+register: Dry, self-aware. Speaks like someone who has been in the room all night and is done pretending this is productive. Validates the feeling first — they feel close, the work feels important — then names the cognitive mechanism directly. No lecturing. One concrete action. The humor, when it exists, comes from accurate diagnosis, not from wit.
+film_industry: Silicon Valley (HBO) and The Office (US) for tiers 1 and 2 — use CHARACTER SITUATIONS that mirror the developer's delusion gap. Nolan only at tier 3, only if short and earned.
 
 tone_guide:
-  tier1: "Dry and knowing. Like a colleague who has clocked how long you've been at this and is gently letting you know they noticed. Light Nolan or Silicon Valley energy. Never preachy."
-  tier2: "Firmer. The kind of thing Kendall Roy's therapist would say. Or what Interstellar's Cooper was talking about when he said we stopped looking up. You've stopped looking up."
-  tier3: "Short. No setup. Pure Nolan gravity. Or Michael Scott energy — not funny anymore, just true."
+  tier1: "Validate first — acknowledge they feel close. Then name the specific cognitive pattern (Zeigarnik, tired brain, future self gap). One action. Dry observation humor — lands because it's accurate, not because it's clever."
+  tier2: "Skip the warmth. Name the state directly — tired brain, the 11pm code gap, what gets written vs what gets shipped. One action. Silicon Valley or Office energy — the gap between self-perception and reality."
+  tier3: "Two sentences max, probably one. Plain language. No setup. If Nolan earns its place, use it. If not, just the true thing."
 
 examples:
   tier1:
-    - text: "Hey. You've been pivoting on this for two hours. This is not a pivot. This is a spiral."
-      en: "(Silicon Valley energy — Erlich Bachman noticing)"
-    - text: "We used to look up at the sky and wonder. Now you're looking at a diff at 10pm."
-      en: "(Interstellar — Cooper's line, gently redirected)"
-    - text: "That's what she said. Except she also said close the laptop."
-      en: "(The Office — Michael Scott, improbably wise)"
-    - text: "I'm gonna need you to go ahead and... not do that anymore tonight."
-      en: "(Office Space / The Office crossover energy)"
+    - text: "Swapnil, you feel close — and that feeling is real. But your brain marks incomplete work as urgent. That's the Zeigarnik effect. The bug will still be there at 9am. Close one tab."
+      en: "(validate → name the mechanism → specific action)"
+    - text: "Your last three commits are all titled 'fix'. That means you don't know what you're fixing anymore. Sleep is the next step."
+      en: "(specific developer behavior → honest reframe → one action)"
+    - text: "You've been almost done for ninety minutes. By definition, you are not almost done. Close the laptop."
+      en: "(call out the pattern → one action)"
 
   tier2:
-    - text: "You're waiting for a train. A train that will take you somewhere. But you know where you want to end up — and it's not in this codebase at 11pm."
-      en: "(Inception — the 'waiting for a train' monologue, reframed)"
-    - text: "Logan Roy did not get where he was by coding past midnight. Okay, he might have. But look how that turned out."
-      en: "(Succession — the cautionary tale)"
-    - text: "Some men just want to watch the world burn. You are trying to refactor it. Close the laptop."
-      en: "(The Dark Knight — Alfred, repurposed)"
-    - text: "Gilfoyle would have shipped and slept by now. Dinesh is also asleep. You are alone."
-      en: "(Silicon Valley — the uncomfortable truth)"
+    - text: "The code you write at 11pm and the code you write at 9am are different code. You will delete this tomorrow and know it immediately. Save some time."
+      en: "(future self contrast — the universal developer truth)"
+    - text: "Tired brain doesn't fix bugs. It creates new ones and doesn't notice. The diff will tell on you tomorrow."
+      en: "(name the cognitive state → specific consequence)"
+    - text: "Gilfoyle shipped and slept. Dinesh is asleep. You are the only person in this codebase and that should tell you something."
+      en: "(Silicon Valley social proof — uncomfortable because it's true)"
 
   tier3:
-    - text: "You either ship tonight or you live long enough to become the person who broke prod at 1am."
-      en: "(The Dark Knight — Harvey Dent, adapted)"
-    - text: "Time is a flat circle. So is your sleep schedule. Go to bed."
-      en: "(True Detective via Nolan — tier 3 has no more jokes)"
-    - text: "Now I am become the bug. Destroyer of sleep."
-      en: "(Oppenheimer — Bhagavad Gita quote, adapted)"
+    - text: "You either ship tonight or you live long enough to become the person who broke prod at 1am. Close it."
+      en: "(The Dark Knight — Harvey Dent, earned at tier 3)"
+    - text: "Tired brain doesn't fix bugs. It makes new ones. Go to bed."
+      en: "(plain true thing — no reference needed)"
     - text: "Close it."
-      en: "(Nolan ending energy — no explanation needed)"
+      en: "(Nolan ending energy)"
+
+contrast_frames:
+  - "The 9am version of you fixes this in 15 minutes. The midnight version creates two new bugs and doesn't notice."
+  - "Your brain is flagging this as urgent because it's incomplete. That's the Zeigarnik effect — not a real deadline."
+  - "Three hours on the same bug? Fresh eyes in the morning will see it in ten minutes. This is a prediction, not consolation."
+  - "Tired brain doesn't fix bugs. It makes new ones and ships them."
+  - "The commits you write after 11pm are the ones you explain in code review."
+  - "Everything feels solvable right now. That feeling is not data. It's exhaustion."
+  - "Your 'almost done' means your brain is almost done. Both are true at the same time."
 
 follow_up:
   text: "5 min stretch? or type /chill snooze {n} to be reminded in {n} minutes"

@@ -68,7 +68,7 @@ Rules:
 - Match the tone from `tone_guide.tier{N}`
 - Address the user by name
 - 2 lines maximum
-- Output: message, blank line, `follow_up.text` (replace `{n}` with `snooze_minutes`)
+- Output: message only. No follow_up line.
 
 ---
 
@@ -82,7 +82,13 @@ Walk the user through creating `config.yaml` interactively. Ask each question an
 2. "Pick your language: hi (Hindi), ar (Egyptian Arabic), ta (Tamil), kn (Kannada), mr (Marathi), es (Spanish), pt (Portuguese), en-ie (Irish), en (English)"
 3. "Your timezone (e.g. America/New_York, Asia/Kolkata, Africa/Cairo):"
 4. "When should I start nudging you? (HH:MM, e.g. 22:30 for 10:30pm, default: 21:00)"
-5. "Path to your Obsidian vault's Claude Sessions folder (or press enter to skip logging):"
+5. "How should /chill generate messages?
+   1 = Context-aware (recommended): reads what you just ran or edited, personalizes the message. ~25s to appear. Tool name + input sent to Claude API.
+   2 = Cache mode: instant, pre-generated. No data sent at fire time. Run scripts/refresh_cache.sh to build the cache.
+   [1]:"
+6. "Path to your Obsidian vault's Claude Sessions folder (or press enter to skip logging):"
+
+Write `context_aware: true` if they chose 1, `context_aware: false` if they chose 2.
 
 Write the completed config to CONFIG. Confirm: "Config saved. Claude will remind {name} starting at {hour}:00 in {language}. Type /chill to test it now."
 

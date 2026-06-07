@@ -69,6 +69,26 @@ else
   T3_TIME=$(printf "%02d:%02d" "$T3_H" "$START_M")
   echo ""
 
+  echo ""
+  echo "How should /chill generate messages?"
+  echo ""
+  echo "  1. Context-aware (recommended)"
+  echo "     Reads what you just ran or edited and personalizes the message."
+  echo "     ~25 seconds to appear. Tool name + input sent to Claude API."
+  echo ""
+  echo "  2. Cache mode"
+  echo "     Pre-generated messages, picked instantly. No data sent at fire time."
+  echo "     Run scripts/refresh_cache.sh once to build the cache."
+  echo ""
+  read -p "  Choice [1]: " CTX_CHOICE
+  CTX_CHOICE="${CTX_CHOICE:-1}"
+  if [ "$CTX_CHOICE" = "2" ]; then
+    CONTEXT_AWARE="false"
+  else
+    CONTEXT_AWARE="true"
+  fi
+  echo ""
+
   read -p "Path to your Obsidian Claude Sessions folder (leave blank to skip): " OBSIDIAN
 
   cat > "$CONFIG" <<EOF
@@ -82,6 +102,7 @@ thresholds:
   - time: "$T3_TIME"      # tier 3: no more jokes (+4h)
 
 snooze_minutes: 30
+context_aware: $CONTEXT_AWARE
 calendar: false
 obsidian_log: "$OBSIDIAN"
 EOF

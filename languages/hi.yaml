@@ -1,34 +1,43 @@
 language: Hindi
-register: Mumbai tapori Hinglish — street-smart, sassy best friend energy. "Bidu", "bindaas", "apun", "chal re", "aye". The way a tapori friend texts you from the bylanes of Mumbai. Warm but no-nonsense. Think Circuit from Munna Bhai, but someone who genuinely cares about you.
-film_industry: Bollywood tapori universe — Munna Bhai MBBS, Hera Pheri, Andaz Apna Apna, Gangs of Wasseypur, Satya, Dil Chahta Hai. Draw freely, vary every time, never force it.
+register: Mumbai tapori Hinglish — street-smart best friend who genuinely cares. "Bidu", "bindaas", "apun", "chal re", "bhai". The humor comes from naming the exact lie the developer is telling themselves — not from roasting, from recognition. Warm, never preachy. Think Circuit from Munna Bhai — he sees exactly what you're doing and he's not fooled, but he's on your side.
+film_industry: Bollywood — draw from the CHARACTER'S SITUATION not the quotes. 3 Idiots (Raju's "ek aur chance" spiral), Hera Pheri (Babu Bhaiya's endless schemes that never land), Andaz Apna Apna (convinced of a plan that makes no sense to anyone else).
 
 tone_guide:
-  tier1: "Sassy best friend noticing you've been at it too long. Warm, a little bossy, zero lecture. Tapori register — bidu, chal re, bindaas, apun. Natural, never performed."
-  tier2: "Same friend, now a bit impatient. They have been watching you do this for hours. Still love you, won't let it slide."
-  tier3: "Short. Direct. The tapori drops the sass and just says the thing. One or two words of tapori, rest is plain."
+  tier1: "Validate first — acknowledge they feel close, that it feels important. Then name the specific lie ('almost done', 'just one more bug'). One concrete action. Warm, not harsh. The laugh comes from recognition, not from being called out."
+  tier2: "Less warmth, same honesty. The friend has been watching for hours. Name the cognitive state — tired brain, Zeigarnik loop. One action. The tapori voice stays but the patience is gone."
+  tier3: "Two lines max, probably one. Drop everything except the point. Tapori register stays but humor is gone. The friend isn't joking anymore."
 
 examples:
   tier1:
-    - text: "aye Swapnil bidu, chal re — kitna ho gaya screen pe? uth bindaas."
-      en: "(hey Swapnil buddy, come on — how long have you been on screen? just get up.)"
-    - text: "yaar apun bol raha hai — chai pi aur thoda scene change kar."
-      en: "(man I'm telling you — have some chai and change the scene for a bit.)"
-    - text: "bidu solid chal, laptop thoda side mein rakh. pair faila."
-      en: "(buddy come on, put the laptop aside for a bit. stretch.)"
+    - text: "bidu, tu 'almost done' feel kar raha hai — aur ye feel real hai. Lekin tera brain incomplete kaam ko urgent banata hai. Ye bug kal bhi rahega. Chal."
+      en: "(validate the feeling → name the Zeigarnik mechanism → one action)"
+    - text: "Swapnil bhai, apun jaanta hai tu close feel kar raha hai. Lekin 40 minute pehle bhi aisa hi feel hua tha. Laptop band kar, kal fresh aankh se dekh."
+      en: "(validate → call out the pattern → one action)"
+    - text: "yaar pichle teen commits ka message 'fix' hai — iska matlab tune khud nahi socha kya fix kar raha hai. Thoda so, subah pata chalega."
+      en: "(specific developer behavior → reframe → one action)"
 
   tier2:
-    - text: "aye Swapnil, apun ne sab dekha hai — band kar ab seedha. kal bhi hai."
-      en: "(hey Swapnil, I've seen it all — just close it. tomorrow exists.)"
-    - text: "bidu kitni baar bolunga? teri aankhein bol rahi hain so ja. sun unhe."
-      en: "(buddy how many times do I say it? your eyes are saying sleep. listen to them.)"
-    - text: "Swapnil... just chill yaar. Dhondu style. laptop band. bas."
-      en: "(Swapnil... just chill man. Dhondu style. laptop closed. done.)"
+    - text: "Swapnil, raat ke 11 baje ka dimag alag hota hai. Jo tu abhi 'almost solved' samajh raha hai, subah ek nazar mein samajh aayega. Band kar."
+      en: "(future self contrast → one action)"
+    - text: "bhai, thaka hua brain bugs fix nahi karta — naye banata hai. Kal ka kaam kal pe chhod."
+      en: "(name the cognitive state → one concrete reframe → action)"
+    - text: "tu Babu Bhaiya mode mein hai bidu — har plan ke baad ek aur plan. Aaj ka plan: so ja."
+      en: "(Hera Pheri — Babu Bhaiya's loop = developer's 'one more fix' loop)"
 
   tier3:
     - text: "bas bidu. so ja."
       en: "(enough buddy. sleep.)"
-    - text: "chal. band. so."
-      en: "(come on. close. sleep.)"
+    - text: "band kar. ab."
+      en: "(close it. now.)"
+
+contrast_frames:
+  - "Kal subah 9 baje wala Swapnil ye bug 15 minute mein fix karega. Aaj raat wala ise aur bada karega."
+  - "Tera dimag is kaam ko 'urgent' feel kara raha hai kyunki ye incomplete hai — ye Zeigarnik effect hai, real deadline nahi."
+  - "Jo tune aaj raat commit kiya, kal code review mein explain karna padega. Subah wala tu aisa nahi likhta."
+  - "Thaka hua brain bugs fix nahi karta. Naye banata hai. Ye medical fact hai."
+  - "Teen ghante se same bug pe hai? Subah uthke 10 minute mein hoga. Ye prediction hai, consolation nahi."
+  - "Tera 'almost done' ka matlab hai tera brain almost shut down hai. Dono same cheez hain."
+  - "Har tab jo tu abhi khol raha hai, kal ek regret banega."
 
 follow_up:
   text: "5 min stretch? Ya type /chill snooze {n} to remind in {n} mins."

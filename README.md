@@ -105,17 +105,67 @@ bash ~/.claude/skills/chill/install.sh
 
 ## How It Works
 
-The hook checks local time after every Claude tool call. When you cross a threshold, it spawns a separate `claude -p` subprocess with only your language pack as context. No conversation history. No accumulated tokens from your session. The message is generated on `claude-haiku`, costs roughly $0.0001, and lands as a finished reminder.
+The hook checks local time after every Claude tool call. When you cross a threshold, it picks a message and prints it.
 
-Your main Claude session never does the work. It does not read your code. It only checks the clock.
+Your main Claude session never does the work. The hook runs as a separate subprocess. Two modes:
 
-Every message is generated fresh from the tone guide and film references in your language YAML. You will never see the exact same message twice. The Bollywood language pack draws from 15+ films and will not repeat the same reference in consecutive fires.
+- **Cache mode (default):** reads a pre-generated message from disk instantly. No API call. No latency.
+- **Context-aware mode:** reads what tool you just ran and what you were working on, then generates a message specific to that moment. Takes ~25 seconds but the message is personalized. Enable with `context_aware: true` in config.yaml.
 
-The messages escalate:
+### Message caching (recommended)
 
-- **Tier 1 (9pm):** "bhai thanda le zara" — warm, casual, a friend noticing
-- **Tier 2 (11pm):** "Swapnil... just chill yaar. Dhondu style. laptop band. bas." — firmer, still loving
-- **Tier 3 (1am):** "bas bidu. so ja." — short sentences. no jokes. it's time.
+By default, if a cache exists, the hook reads a random pre-generated message from disk instantly. No API call, no latency.
+
+To build the cache:
+
+```bash
+bash ~/.claude/skills/chill/scripts/refresh_cache.sh
+```
+
+This generates 5 messages per tier × language combination (45 total for the default hi/mr/en config) and stores them in `~/.claude/skills/chill/cache/`. Run it once, then refresh weekly or whenever you change config.
+
+**Without cache:** the hook calls `claude -p` live — always fresh, but 25-30 seconds. A 30-second reminder misses the point. The cache is the right default.
+
+**With cache:** instant. A pool of 5 messages per tier gives you a week of unique messages before any repeat. Falls back to live generation automatically if the cache is empty.
+
+### Why it works (or tries to)
+
+The reason you can't stop coding at midnight isn't willpower. It's the Zeigarnik effect — your brain marks incomplete tasks as urgent and keeps them active until they're resolved. "Just one more" is your brain lying to you about how close you are.
+
+/chill addresses this directly. Each message does two things: names the cognitive state you're in ("your brain is flagging this as urgent because it's incomplete — that's not a real deadline"), then gives you a vivid contrast with your future self ("the 9am version of you fixes this in 15 minutes"). The contrast is what behavior research shows actually moves people — not advice, not reminders, not humor alone.
+
+The tapori warmth is real too. Tone matters. A message that feels like a friend noticing gets a different response than one that feels like a productivity app.
+
+### The messages escalate
+
+Each message has two parts: a psychological reframe first, then the tapori line. The reframe does the actual work. The tapori line makes it feel like a friend, not a productivity app.
+
+**Tier 1 — 9pm (warm, a friend noticing):**
+```
+Kal subah 9 baje wala Swapnil ye bug 15 minute mein fix karega.
+Aaj raat wala ise aur bada karega.
+Bhai thanda le zara — tu almost done nahi hai, tu almost thaka hua hai.
+```
+
+**Tier 2 — 11pm (firmer, still loving):**
+```
+Tera dimag is kaam ko urgent feel kara raha hai kyunki ye incomplete hai.
+Ye Zeigarnik effect hai, real deadline nahi.
+Swapnil... bidu, laptop band kar. Dhondu style. Bas.
+```
+
+**Tier 3 — 1am (short sentences, no jokes):**
+```
+Thaka hua brain bugs fix nahi karta. Naye banata hai.
+Bas. So ja.
+```
+
+English equivalent (Tier 1):
+```
+The 9am version of you fixes this in 15 minutes.
+The midnight version creates two new bugs and doesn't notice.
+You are not almost done. You are almost asleep.
+```
 
 ![Dhondu just chill](https://media1.tenor.com/m/cVOPRBRLThsAAAAC/all-the-best-sanjay-mishra-raghu-dhondu-just-chill.gif)
 

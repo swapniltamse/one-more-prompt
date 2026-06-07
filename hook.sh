@@ -9,6 +9,12 @@ LANGUAGES_DIR="$SKILL_DIR/languages"
 
 [ ! -f "$CONFIG" ] && exit 0
 
+# Read PostToolUse event from stdin (piped by Claude Code — empty on manual invocation)
+HOOK_CTX=""
+if [ ! -t 0 ]; then
+  HOOK_CTX=$(cat 2>/dev/null)
+fi
+
 FORCE=0
 NOTIFY=0
 FORCED_TIER=""
@@ -62,7 +68,7 @@ else
   parse_thresh() {
     local raw=$1
     if echo "$raw" | grep -q 'time:'; then
-      local val; val=$(echo "$raw" | sed 's/.*time: *//' | tr -d '"' | tr -d "'")
+      local val; val=$(echo "$raw" | sed 's/.*time: *//' | tr -d '"' | tr -d "'" | awk '{print $1}')
       local h; h=$(echo "$val" | cut -d: -f1 | sed 's/^0*//' ); h=${h:-0}
       local m; m=$(echo "$val" | cut -d: -f2 | sed 's/^0*//' ); m=${m:-0}
       to_mins "$h" "$m"
@@ -123,6 +129,8 @@ fi
 OBSIDIAN_LOG=$(grep 'obsidian_log:' "$CONFIG" | sed 's/obsidian_log: *//' | tr -d '"')
 SNOOZE_MINS=$(grep 'snooze_minutes' "$CONFIG" | awk '{print $2}' | tr -d '"')
 SNOOZE_MINS=${SNOOZE_MINS:-30}
+CONTEXT_AWARE=$(grep '^context_aware:' "$CONFIG" | awk '{print $2}' | tr -d '"')
+CONTEXT_AWARE=${CONTEXT_AWARE:-false}
 NAME=${NAME:-friend}
 LANG=${LANG:-en}
 
@@ -157,12 +165,40 @@ if [ -z "$MODEL_CMD" ]; then
   MODEL_CMD=$(grep '^model_cmd:' "$CONFIG" | sed 's/model_cmd: *//' | tr -d '"')
 fi
 
+# Parse tool context from hook stdin (context_aware mode only)
+TOOL_CONTEXT_SECTION=""
+if [ "$CONTEXT_AWARE" = "true" ] && [ -n "$HOOK_CTX" ] && command -v python3 &>/dev/null; then
+  TOOL_NAME=$(echo "$HOOK_CTX" | python3 -c "
+import json, sys
+try:
+    d = json.load(sys.stdin)
+    print(d.get('tool_name', ''))
+except: pass
+" 2>/dev/null)
+  TOOL_DETAIL=$(echo "$HOOK_CTX" | python3 -c "
+import json, sys
+try:
+    d = json.load(sys.stdin)
+    inp = d.get('tool_input', {})
+    detail = inp.get('command') or inp.get('file_path') or inp.get('pattern') or ''
+    print(str(detail)[:200])
+except: pass
+" 2>/dev/null)
+  if [ -n "$TOOL_NAME" ]; then
+    TOOL_CONTEXT_SECTION="
+Optional context (what the developer just did — use it to make the message specific if it adds something real, otherwise ignore it):
+Tool: $TOOL_NAME
+Input: $TOOL_DETAIL"
+  fi
+fi
+
 PROMPT="Generate one chill reminder message for a developer named $NAME who has been coding too late at night.
 
 Register: $REGISTER
 Film universe for parody references: $FILM_INDUSTRY
 Tone for this tier: $TONE
 $CALENDAR_CONTEXT
+$TOOL_CONTEXT_SECTION
 
 Rules:
 - Write in the language register described, NOT in English
@@ -170,20 +206,49 @@ Rules:
 - Maximum 2 lines
 - Output ONLY the message itself, no quotes, no explanation, no English translation"
 
-# Generate message — use custom model_cmd if set, else claude -p (default)
-if [ -n "$MODEL_CMD" ]; then
-  MSG=$(eval "$MODEL_CMD \"$PROMPT\"" 2>/dev/null)
-elif command -v claude &>/dev/null; then
-  MSG=$(claude -p "$PROMPT" --model claude-haiku-4-5-20251001 2>/dev/null)
+# Generate message — two paths based on context_aware config
+if [ "$CONTEXT_AWARE" = "true" ]; then
+  # Context-aware: always live — cache would miss what the user just did
+  if [ -n "$MODEL_CMD" ]; then
+    MSG=$(eval "$MODEL_CMD \"$PROMPT\"" 2>/dev/null)
+  elif command -v claude &>/dev/null; then
+    MSG=$(claude -p "$PROMPT" --model claude-haiku-4-5-20251001 2>/dev/null)
+  else
+    echo "It is $(date +'%I:%M %p'). Remind $NAME to take a break. Tier $TIER. Hinglish. Two lines max. No explanation."
+    exit 0
+  fi
 else
-  # claude not in PATH — fall back to inline instruction for main session
-  echo "It is $(date +'%I:%M %p'). Remind $NAME to take a break. Tier $TIER. Hinglish. Two lines max. No explanation."
-  exit 0
+  # Cache mode: instant if cache exists, live fallback otherwise
+  CACHE_DIR="$SKILL_DIR/cache"
+  CACHE_FILE="$CACHE_DIR/tier${TIER}_${LANG}.txt"
+  if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
+    LINE_COUNT=$(wc -l < "$CACHE_FILE")
+    RAND_LINE=$(( RANDOM % LINE_COUNT + 1 ))
+    RAW=$(awk "NR==$RAND_LINE" "$CACHE_FILE")
+    MSG=$(echo "$RAW" | sed 's/|/\n/g')
+  elif [ -n "$MODEL_CMD" ]; then
+    MSG=$(eval "$MODEL_CMD \"$PROMPT\"" 2>/dev/null)
+  elif command -v claude &>/dev/null; then
+    MSG=$(claude -p "$PROMPT" --model claude-haiku-4-5-20251001 2>/dev/null)
+  else
+    echo "It is $(date +'%I:%M %p'). Remind $NAME to take a break. Tier $TIER. Hinglish. Two lines max. No explanation."
+    exit 0
+  fi
 fi
 
 # Fallback if generation failed or returned empty
 if [ -z "$MSG" ]; then
   MSG="$NAME bhai, bahut ho gaya aaj. Thoda rest le yaar."
+fi
+
+# Pick a random one-liner from the language pack (optional — silently skipped if absent)
+ONE_LINER=""
+OL_LINES=$(awk '/^contrast_frames:/{found=1; next} found && /^\s*-/{print; next} found && /^[^ ]/{exit}' "$LANG_FILE" \
+           | sed 's/^\s*- *//' | tr -d '"')
+if [ -n "$OL_LINES" ]; then
+  OL_COUNT=$(echo "$OL_LINES" | wc -l)
+  OL_RAND=$(( RANDOM % OL_COUNT + 1 ))
+  ONE_LINER=$(echo "$OL_LINES" | awk "NR==$OL_RAND")
 fi
 
 # Output — terminal print or system notification depending on --notify flag
@@ -211,7 +276,11 @@ Start-Sleep 7
   fi
 else
   # Print to terminal (Claude Code PostToolUse session)
-  printf '\n%s\n\n%s\n' "$MSG" "$FOLLOW_UP"
+  if [ -n "$ONE_LINER" ]; then
+    printf '\n%s\n%s\n' "$ONE_LINER" "$MSG"
+  else
+    printf '\n%s\n' "$MSG"
+  fi
 fi
 
 # Log to Obsidian directly — no Claude involvement

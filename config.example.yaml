@@ -13,6 +13,13 @@ thresholds:
 
 snooze_minutes: 30
 
+# Message generation mode
+# context_aware: true  — hook reads what you just ran or edited, generates a personalized message
+#                        ~25s latency at fire time. Tool name + input sent to Claude API.
+# context_aware: false — instant. Uses pre-generated cache (run scripts/refresh_cache.sh once).
+#                        No data sent at fire time beyond the clock check.
+context_aware: true
+
 # Optional: calendar awareness
 # Requires Google Calendar MCP connected to your Claude account
 # For auto-fire: run scripts/fetch_calendar.sh on a schedule to populate the cache

@@ -3,24 +3,24 @@
 > "Just one more prompt."
 > — Every developer, 2am, right before they broke production.
 
-A Claude Code skill that fires when you've been at it too long. Speaks as your street-smart, sassy best friend. In your own language. Escalates. And if you have a 9am standup, it will tell you that too.
+A Claude Code skill that fires when you've been at it too long. Speaks as your street-smart best friend. In your own language. Escalates. And if you have a 9am standup, it will tell you that too.
 
 ---
 
-## The Problem
+## The problem
 
 You opened Claude to fix a bug. That was four hours ago. It's now past midnight. You're refactoring things that weren't broken. Claude is happy to keep going. Claude does not sleep. Claude does not have a mortgage. Claude is not you.
 
-This skill is for **you**.
+This skill is for you.
 
 ---
 
-## What It Does
+## What it does
 
-- Detects the local time and fires a warm reminder when you cross a threshold (9pm, 11pm, 1am)
-- Delivers the reminder in **your language**. Not just translated. In the register you'd use texting a friend at midnight.
-- Speaks as your **street-smart, sassy best friend**, not a wellness app. Hindi/Marathi fires in tapori register. "Aye bidu chal re, kitna ho gaya screen pe?"
-- Draws from **15+ film universes**: Bollywood tapori (Munna Bhai, Hera Pheri), Kollywood, KGF, In Bruges, El Chavo, and more. Never the same reference twice.
+- Detects the local time and fires a reminder when you cross a threshold (9pm, 11pm, 1am)
+- Delivers the reminder in your language. Not just translated. In the register you'd use texting a friend at midnight.
+- Speaks as your street-smart best friend, not a wellness app. Hindi/Marathi fires in tapori register. "Aye bidu chal re, kitna ho gaya screen pe?"
+- Draws from 15+ film universes: Bollywood tapori (Munna Bhai, Hera Pheri), Kollywood, KGF, In Bruges, El Chavo, and more. Never the same reference twice.
 - Escalates in tone. The 9pm message is a suggestion. The 1am message is two words.
 - Calendar awareness (optional): if you have a standup at 9am, it will tell you. "Bhai kal 9am standup hai bidu. So ja."
 - Logs every reminder to Obsidian so you can see your own patterns and feel appropriately judged
@@ -28,7 +28,7 @@ This skill is for **you**.
 
 ---
 
-## Supported Languages
+## Supported languages
 
 | Code | Language | Film Universe |
 |------|----------|---------------|
@@ -42,7 +42,7 @@ This skill is for **you**.
 | `en-ie` | Irish English | In Bruges, The Commitments |
 | `en` | English | Silicon Valley, The Office, Succession, Nolan |
 
-### Fictional / Pop Culture Languages
+### Fictional / pop culture languages
 
 | Code | Language | Universe |
 |------|----------|----------|
@@ -62,13 +62,13 @@ git clone https://github.com/swapniltamse/one-more-prompt ~/.claude/skills/chill
 bash ~/.claude/skills/chill/install.sh
 ```
 
-The installer runs three steps and tells you exactly what it's doing at each one:
+The installer runs three steps and tells you exactly what it's doing at each one.
 
-**Step 1 — config.yaml.** Asks your name, language, and timezone. Skipped if config already exists.
+Step 1 sets up config.yaml: asks your name, language, and timezone. Skipped if a config already exists.
 
-**Step 2 — Claude Code hook.** Adds one entry to `~/.claude/settings.json` under `hooks.PostToolUse`. This fires after every Claude Code tool call and prints your reminder in the terminal. Safe to run twice — it checks before adding.
+Step 2 wires the Claude Code hook: adds one entry to `~/.claude/settings.json` under `hooks.PostToolUse`. This fires after every tool call. Checks before adding, so safe to run twice.
 
-**Step 3 — System notifications (optional, you choose y/n).** For when you're on claude.ai, Cursor, VS Code, or anywhere else. On Windows, creates 3 tasks in Task Scheduler under `chill\` — one per threshold. On macOS/Linux, adds 3 cron entries. The installer prints exactly what it will register before doing it. Tasks run as your user account. No admin rights required.
+Step 3 sets up system notifications (optional, you choose y/n). For when you're on claude.ai, Cursor, VS Code, or anywhere else. On Windows, creates 3 tasks in Task Scheduler under `chill\`, one per threshold. On macOS/Linux, adds 3 cron entries. The installer prints exactly what it will register before doing it. No admin rights required.
 
 To remove everything:
 
@@ -103,14 +103,14 @@ bash ~/.claude/skills/chill/install.sh
 
 ---
 
-## How It Works
+## How it works
 
 The hook checks local time after every Claude tool call. When you cross a threshold, it picks a message and prints it.
 
 Your main Claude session never does the work. The hook runs as a separate subprocess. Two modes:
 
-- **Cache mode (default):** reads a pre-generated message from disk instantly. No API call. No latency.
-- **Context-aware mode:** reads what tool you just ran and what you were working on, then generates a message specific to that moment. Takes ~25 seconds but the message is personalized. Enable with `context_aware: true` in config.yaml.
+- Cache mode (default): reads a pre-generated message from disk instantly. No API call. No latency.
+- Context-aware mode: reads what tool you just ran and what you were working on, then generates a message specific to that moment. Takes ~25 seconds but personalized. Enable with `context_aware: true` in config.yaml.
 
 ### Message caching (recommended)
 
@@ -124,17 +124,17 @@ bash ~/.claude/skills/chill/scripts/refresh_cache.sh
 
 This generates 5 messages per tier × language combination (45 total for the default hi/mr/en config) and stores them in `~/.claude/skills/chill/cache/`. Run it once, then refresh weekly or whenever you change config.
 
-**Without cache:** the hook calls `claude -p` live — always fresh, but 25-30 seconds. A 30-second reminder misses the point. The cache is the right default.
+If you skip the cache, the hook calls `claude -p` live. Fresh message every time, but 25-30 seconds is a long time to wait for someone to tell you to sleep. The cache is the right default.
 
-**With cache:** instant. A pool of 5 messages per tier gives you a week of unique messages before any repeat. Falls back to live generation automatically if the cache is empty.
+Run the cache script and messages appear instantly. You get a pool of 5 per tier before anything repeats. Falls back to live generation automatically if the cache is empty.
 
 ### Why it works (or tries to)
 
-The reason you can't stop coding at midnight isn't willpower. It's the Zeigarnik effect — your brain marks incomplete tasks as urgent and keeps them active until they're resolved. "Just one more" is your brain lying to you about how close you are.
+The reason you can't stop coding at midnight isn't willpower. It's the Zeigarnik effect: your brain marks incomplete tasks as urgent and keeps them active until they're resolved. "Just one more" is your brain lying to you about how close you are.
 
-/chill addresses this directly. Each message does two things: names the cognitive state you're in ("your brain is flagging this as urgent because it's incomplete — that's not a real deadline"), then gives you a vivid contrast with your future self ("the 9am version of you fixes this in 15 minutes"). The contrast is what behavior research shows actually moves people — not advice, not reminders, not humor alone.
+Each message does two things: names the cognitive state ("your brain is flagging this as urgent because it's incomplete, not a real deadline"), then contrasts it with your future self ("the 9am version of you fixes this in 15 minutes"). Hal Hershfield has spent a decade studying this. Vivid future-self contrasts change behavior. Vague reminders don't.
 
-The tapori warmth is real too. Tone matters. A message that feels like a friend noticing gets a different response than one that feels like a productivity app.
+Tone is doing real work here too. A message that sounds like a friend catches you differently than a productivity nudge.
 
 ### The messages escalate
 
@@ -171,9 +171,9 @@ You are not almost done. You are almost asleep.
 
 ---
 
-## Calendar Awareness (Optional)
+## Calendar awareness (optional)
 
-When `calendar: true` is set in your config, /chill checks your first meeting tomorrow and weaves it into the message naturally.
+When `calendar: true` is set in your config, /chill checks your first meeting tomorrow and includes it in the message.
 
 > "aye bidu, kal 9am standup hai. band kar laptop aur so ja."
 
@@ -190,7 +190,7 @@ For the auto-fire hook: it reads a cache file at `/tmp/chill_calendar_cache.txt`
 
 ---
 
-## Using with Other Tools
+## Using with other tools
 
 The hook script works with any AI coding tool that supports running a shell command after tool calls. The only Claude-specific part is the message generation. You can swap that out.
 
@@ -224,7 +224,7 @@ For wiring the hook in other tools:
 
 ---
 
-## Adding a New Language
+## Adding a new language
 
 1. Copy `languages/en.yaml` as a template
 2. Fill in `language`, `register`, `film_industry`, `tone_guide`
@@ -238,7 +238,7 @@ See `languages/README.md` for the full contributor guide.
 
 ---
 
-## The Story Behind This
+## The story behind this
 
 I built this after a friend texted me a prompt at 2:47 AM. He wasn't stuck. The original task was done hours ago. He just couldn't stop.
 
@@ -247,6 +247,8 @@ I recognized it. I do it too.
 Send it to whoever needs it.
 
 The tapori register was inspired by [bhai-lang](https://github.com/DulLabs/bhai-lang). If bhai-lang could make `print` feel like home, /chill could make "close the laptop" feel the same way.
+
+Built by [Swapnil Tamse](https://www.linkedin.com/in/swapniltamse/), Engineering Leader in AI/AI Security.
 
 ---
 

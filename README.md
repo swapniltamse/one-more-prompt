@@ -1,4 +1,4 @@
-# /chill — One More Prompt, But Make It Your Last
+# /chill: One More Prompt, But Make It Your Last
 
 > "Just one more prompt."
 > — Every developer, 2am, right before they broke production.

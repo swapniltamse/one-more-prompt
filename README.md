@@ -9,9 +9,11 @@ A Claude Code skill that fires when you've been at it too long. Speaks as your s
 
 ## The problem
 
-You opened Claude to fix a bug. That was four hours ago. It's now past midnight. You're refactoring things that weren't broken. Claude is happy to keep going. Claude does not sleep. Claude does not have a mortgage. Claude is not you.
+You opened Claude to fix a bug. That was four hours ago. It's now past midnight. You're refactoring things that weren't broken. Claude is happy to keep going. Claude does not sleep. Claude does not get lower back pain. Claude is not you.
 
 This skill is for you.
+
+![Dhondu just chill](https://media1.tenor.com/m/cVOPRBRLThsAAAAC/all-the-best-sanjay-mishra-raghu-dhondu-just-chill.gif)
 
 ---
 
@@ -46,16 +48,7 @@ https://github.com/user-attachments/assets/53a08815-ef2a-4301-944f-c3f53232fa0f
 | `en-ie` | Irish English | In Bruges, The Commitments |
 | `en` | English | Silicon Valley, The Office, Succession, Nolan |
 
-### Fictional / pop culture languages
-
-| Code | Language | Universe |
-|------|----------|----------|
-| `tlh` | Klingon | Star Trek — sleep is honor |
-| `sjn` | Sindarin Elvish | Lord of the Rings — namárië |
-| `dot` | Dothraki | Game of Thrones — k'athjilari |
-| `min` | Minionese | Despicable Me — banana |
-| `groo` | Groot | Guardians of the Galaxy — I am Groot |
-| `sml` | Simlish | The Sims — your needs bar is in the red |
+Six fictional/pop culture packs also included: Klingon, Sindarin Elvish, Dothraki, Minionese, Groot, and Simlish. Because why not.
 
 ---
 
@@ -72,26 +65,9 @@ Step 1 sets up config.yaml: asks your name, language, and timezone. Skipped if a
 
 Step 2 wires the Claude Code hook: adds one entry to `~/.claude/settings.json` under `hooks.PostToolUse`. This fires after every tool call. Checks before adding, so safe to run twice.
 
-Step 3 sets up system notifications (optional, you choose y/n). For when you're on claude.ai, Cursor, VS Code, or anywhere else. On Windows, creates 3 tasks in Task Scheduler under `chill\`, one per threshold. On macOS/Linux, adds 3 cron entries. The installer prints exactly what it will register before doing it. No admin rights required.
+Step 3 sets up system notifications (optional, you choose y/n). For when you're on claude.ai, Cursor, VS Code, or anywhere else. On Windows, creates 3 tasks in Task Scheduler under `chill\`, one per threshold. On macOS/Linux, adds 3 cron entries. No admin rights required.
 
-To remove everything:
-
-```bash
-bash ~/.claude/skills/chill/uninstall.sh
-```
-
-This removes the settings.json hook, the scheduled tasks or cron entries, and optionally your config.yaml. The skill files stay unless you delete them manually.
-
-### Manual setup (optional)
-
-If you prefer to configure by hand or already have a `config.yaml`:
-
-```bash
-cp ~/.claude/skills/chill/config.example.yaml ~/.claude/skills/chill/config.yaml
-# edit config.yaml, then:
-bash ~/.claude/skills/chill/install.sh
-# installer skips config questions and goes straight to hook + notification setup
-```
+To remove everything: `bash ~/.claude/skills/chill/uninstall.sh`
 
 ---
 
@@ -109,28 +85,12 @@ bash ~/.claude/skills/chill/install.sh
 
 ## How it works
 
-The hook checks local time after every Claude tool call. When you cross a threshold, it picks a message and prints it.
+The hook checks local time after every Claude tool call. When you cross a threshold, it picks a message and prints it. Your main Claude session never does the work.
 
-Your main Claude session never does the work. The hook runs as a separate subprocess. Two modes:
+Two modes:
 
-- Cache mode (default): reads a pre-generated message from disk instantly. No API call. No latency.
-- Context-aware mode: reads what tool you just ran and what you were working on, then generates a message specific to that moment. Takes ~25 seconds but personalized. Enable with `context_aware: true` in config.yaml.
-
-### Message caching (recommended)
-
-By default, if a cache exists, the hook reads a random pre-generated message from disk instantly. No API call, no latency.
-
-To build the cache:
-
-```bash
-bash ~/.claude/skills/chill/scripts/refresh_cache.sh
-```
-
-This generates 5 messages per tier × language combination (45 total for the default hi/mr/en config) and stores them in `~/.claude/skills/chill/cache/`. Run it once, then refresh weekly or whenever you change config.
-
-If you skip the cache, the hook calls `claude -p` live. Fresh message every time, but 25-30 seconds is a long time to wait for someone to tell you to sleep. The cache is the right default.
-
-Run the cache script and messages appear instantly. You get a pool of 5 per tier before anything repeats. Falls back to live generation automatically if the cache is empty.
+- Cache mode (default): pre-generated messages read from disk instantly. No API call. No latency. Run `bash ~/.claude/skills/chill/scripts/refresh_cache.sh` once to build the cache — generates 5 messages per tier × language, refreshes in seconds. Falls back to live generation if cache is empty.
+- Context-aware mode: reads what tool you just ran and what you were working on, generates a message specific to that moment. Takes ~25 seconds. Enable with `context_aware: true` in config.yaml.
 
 ### Why it works (or tries to)
 
@@ -183,8 +143,6 @@ Matlab tu abhi productivity calculate kar raha hai, kaam nahi. Chal band kar.
 
 It read the last tool call, saw a cost comparison, and named exactly what was happening. No generic reminder. Enable it with `context_aware: true` in config.yaml. Takes ~25 seconds to generate. Worth it.
 
-![Dhondu just chill](https://media1.tenor.com/m/cVOPRBRLThsAAAAC/all-the-best-sanjay-mishra-raghu-dhondu-just-chill.gif)
-
 ---
 
 ## Calendar awareness (optional)
@@ -202,33 +160,20 @@ For the auto-fire hook: it reads a cache file at `/tmp/chill_calendar_cache.txt`
 0 18 * * * bash ~/.claude/skills/chill/scripts/fetch_calendar.sh
 ```
 
-`fetch_calendar.sh` uses `claude -p` with Calendar MCP to get tomorrow's first event and writes it to the cache. If you're not comfortable connecting Calendar MCP, leave `calendar: false`. Everything else works fine.
+If you're not comfortable connecting Calendar MCP, leave `calendar: false`. Everything else works fine.
 
 ---
 
 ## Using with other tools
 
-The hook script works with any AI coding tool that supports running a shell command after tool calls. The only Claude-specific part is the message generation. You can swap that out.
-
-Set `model_cmd` in your `config.yaml` to use a different LLM CLI:
+The hook works with any AI coding tool that supports running a shell command after tool calls. Set `model_cmd` in config.yaml to swap the LLM:
 
 ```yaml
-# llm (Simon Willison's tool — works with OpenAI, Anthropic, local models)
-model_cmd: "llm"
-
-# shell-gpt
-model_cmd: "sgpt"
-
-# local Ollama model
-model_cmd: "ollama run llama3"
-
-# Gemini CLI
-model_cmd: "gemini -p"
+model_cmd: "llm"          # Simon Willison's llm — OpenAI, Anthropic, local models
+model_cmd: "sgpt"         # shell-gpt
+model_cmd: "ollama run llama3"  # local Ollama
+model_cmd: "gemini -p"    # Gemini CLI
 ```
-
-The command receives the prompt as its last argument. Output goes directly to your terminal as the chill message.
-
-For wiring the hook in other tools:
 
 | Tool | Hook type | Config location |
 |------|-----------|----------------|
@@ -236,7 +181,7 @@ For wiring the hook in other tools:
 | Codex CLI | after-tool | `~/.codex/config.toml` |
 | Gemini CLI | PostToolUse | `~/.gemini/settings.json` |
 
-`install.sh` currently wires Claude Code only. For other tools, add the equivalent hook manually pointing to `bash ~/.claude/skills/chill/hook.sh`.
+`install.sh` wires Claude Code only. For other tools, point the hook manually to `bash ~/.claude/skills/chill/hook.sh`.
 
 ---
 
@@ -246,9 +191,8 @@ For wiring the hook in other tools:
 2. Fill in `language`, `register`, `film_industry`, `tone_guide`
 3. Add 2-3 examples per tier in romanized script
 4. Add 1-2 movie quote parodies per tier (the funnier the better)
-5. Add a `follow_up` line
-6. Name the file with the ISO 639-1 code (e.g. `de.yaml` for German)
-7. Open a PR
+5. Name the file with the ISO 639-1 code (e.g. `de.yaml` for German)
+6. Open a PR
 
 See `languages/README.md` for the full contributor guide.
 
@@ -256,13 +200,9 @@ See `languages/README.md` for the full contributor guide.
 
 ## The story behind this
 
-I built this after a friend texted me a prompt at 2:47 AM. He wasn't stuck. The original task was done hours ago. He just couldn't stop.
-
-I recognized it. I do it too.
+The tapori register was inspired by [bhai-lang](https://github.com/DulLabs/bhai-lang). If bhai-lang could make `print` feel like home, /chill could make "close the laptop" feel the same way.
 
 Send it to whoever needs it.
-
-The tapori register was inspired by [bhai-lang](https://github.com/DulLabs/bhai-lang). If bhai-lang could make `print` feel like home, /chill could make "close the laptop" feel the same way.
 
 Built by [Swapnil Tamse](https://www.linkedin.com/in/swapniltamse/), Engineering Leader in AI/AI Security.
 

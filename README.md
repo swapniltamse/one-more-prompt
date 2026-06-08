@@ -204,7 +204,7 @@ The tapori register was inspired by [bhai-lang](https://github.com/DulLabs/bhai-
 
 Send it to whoever needs it.
 
-Built by [Swapnil Tamse](https://www.linkedin.com/in/swapniltamse/), Engineering Leader in AI/AI Security.
+Built by [Swapnil Tamse](https://www.linkedin.com/in/swapniltamse/), Engineering Leader in AI/AI Security. [Launch post](https://www.linkedin.com/feed/update/urn:li:activity:7469732811755823105/)
 
 ---
 

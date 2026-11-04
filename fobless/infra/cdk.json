@@ -1,0 +1,8 @@
+{
+  "app": "npx tsx bin/fobless.ts",
+  "context": {
+    "ownerUserId": "",
+    "cognitoDomainPrefix": "",
+    "vehicleProvider": "simulator"
+  }
+}
